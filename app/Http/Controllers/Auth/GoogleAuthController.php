@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Mockery\Exception;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class GoogleAuthController extends Controller
 {
@@ -21,7 +22,7 @@ class GoogleAuthController extends Controller
         try {
             $googleUser = Socialite::driver("google")->user();
             $user = User::where("email", $googleUser->email)->first();
-
+//            return "test";
             if ($user) {
                 auth()->loginUsingId($user->id);
             } else {
@@ -34,9 +35,11 @@ class GoogleAuthController extends Controller
             }
             return redirect("/");
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // TODO show Error Message
-            return "error!";
+            Alert::error('Error Message', 'Login / Register with google was not success :(')->persistent();
+//            Alert::error('! ارور داری', '): ورود با گوگل موفق نبود')->persistent("بسیار خب");
+            return redirect("/login");
         }
     }
 }
