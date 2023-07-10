@@ -8,6 +8,9 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
+                    <div class="col-md-8 offset-md-4 mb-3">
+                        <a href="{{route("auth.google")}}" class="btn btn-danger">Register With Google</a>
+                    </div>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
