@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,9 @@ Route::get("/auth/google", [\App\Http\Controllers\Auth\GoogleAuthController::cla
 Route::get("/auth/google/callback", [\App\Http\Controllers\Auth\GoogleAuthController::class,"callback"]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get("/profile", [ProfileController::class, "index"])->name("profile");
+Route::get("/profile/twofactorauth", [ProfileController::class, "manageTwoFactorAuth"])->name("profile.2fa.manage");
+Route::post("/profile/twofactorauth", [ProfileController::class, "postManageTwoFactorAuth"]);
 
 
 Route::get("/secret", function (){
