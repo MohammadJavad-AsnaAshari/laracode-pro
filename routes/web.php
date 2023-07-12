@@ -27,6 +27,9 @@ Route::get("/profile", [ProfileController::class, "index"])->name("profile");
 Route::get("/profile/twofactorauth", [ProfileController::class, "manageTwoFactorAuth"])->name("profile.2fa.manage");
 Route::post("/profile/twofactorauth", [ProfileController::class, "postManageTwoFactorAuth"]);
 
+Route::get("/profile/twofactorauth/phone", [ProfileController::class, "getPhoneVerify"])->name("profile.2fa.phone");
+Route::post("/profile/twofactorauth/phone", [ProfileController::class, "postPhoneVerify"]);
+
 
 Route::get("/secret", function (){
     return "secret";
