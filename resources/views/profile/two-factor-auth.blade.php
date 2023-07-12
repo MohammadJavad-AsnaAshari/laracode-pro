@@ -15,14 +15,15 @@
             </ul>
         </div>
     @endif
-    <form action="#" method="POST">
+    <form action="{{route("profile.2fa.manage")}}" method="post">
         @csrf
 
         <div class="form-group mb-3">
             <label for="type">Type</label>
             <select name="type" class="form-control" id="type">
                 @foreach(config("twofactor.types") as $key=>$name)
-                    <option value="{{$key}}" {{old("type") == $key || auth()->user()->hasTwoFactor($key) ? "selected" : ""}}>{{$name}}</option>
+                    <option
+                        value="{{$key}}" {{old("type") == $key || auth()->user()->hasTwoFactor($key) ? "selected" : ""}}>{{$name}}</option>
                 @endforeach
             </select>
         </div>

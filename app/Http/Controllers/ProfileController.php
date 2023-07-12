@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActiveCode;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,10 @@ class ProfileController extends Controller
 
             if ($request->user()->phone_number !== $data["phone"]){
                 // create a new code
+                $code = ActiveCode::generateCode($request->user());
                 // send the code to the user phone number
+                // TODO Send SMS
+
                 return redirect(route("profile.2fa.phone"));
             }
 

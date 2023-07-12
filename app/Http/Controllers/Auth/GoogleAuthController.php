@@ -36,7 +36,7 @@ class GoogleAuthController extends Controller
             return redirect("/");
 
         } catch (\Exception $e) {
-            // TODO show Error Message
+            // TODO Log Error Message
             Alert::error('Error Message', 'Login / Register with google was not success :(')->persistent();
 //            Alert::error('! ارور داری', '): ورود با گوگل موفق نبود')->persistent("بسیار خب");
             return redirect("/login");
