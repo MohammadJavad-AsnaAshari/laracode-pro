@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(["auth", "verified"]);
+    }
+
     public function index()
     {
         $user = auth()->user();
@@ -25,6 +30,16 @@ class ProfileController extends Controller
             "phone" => "required_unless:type,off"
         ]);
 
-        return $data;
+        if ($data["type"] === "sms") {
+            // validation phone number
+        }
+
+        if ($data["type"] === "off"){
+            $request->user()->update([
+                "two_factor_type" => "off"
+            ]);
+        }
+
+        return back();
     }
 }

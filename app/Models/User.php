@@ -22,6 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        "two_factor_type",
+        "phone_number"
     ];
 
     /**
@@ -43,4 +45,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function hasTwoFactor($key)
+    {
+        return $this->two_factor_type == $key ? "selected" : "";
+    }
 }

@@ -21,14 +21,15 @@
         <div class="form-group mb-3">
             <label for="type">Type</label>
             <select name="type" class="form-control" id="type">
-                <option value="off">off</option>
-                <option value="sms">sms</option>
+                @foreach(config("twofactor.types") as $key=>$name)
+                    <option value="{{$key}}" {{old("type") == $key || auth()->user()->hasTwoFactor($key) ? "selected" : ""}}>{{$name}}</option>
+                @endforeach
             </select>
         </div>
 
         <div class="form-group mb-3">
             <label for="phone">Phone</label>
-            <input type="text" name="phone" id="phone" class="form-control" placeholder="Please add you phone number">
+            <input type="text" name="phone" id="phone" class="form-control" placeholder="Please add you phone number" value="{{old("phone") ?? auth()->user()->phone_number}}">
         </div>
 
         <div class="form-group mb-3">
