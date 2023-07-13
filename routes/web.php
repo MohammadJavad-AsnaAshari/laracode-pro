@@ -22,6 +22,9 @@ Auth::routes(["verify" => true]);
 Route::get("/auth/google", [\App\Http\Controllers\Auth\GoogleAuthController::class,"redirect"])->name("auth.google");
 Route::get("/auth/google/callback", [\App\Http\Controllers\Auth\GoogleAuthController::class,"callback"]);
 
+Route::get("/auth/token", [\App\Http\Controllers\Auth\AuthTokenController::class,"getToken"])->name("2fa.token");
+Route::post("/auth/token", [\App\Http\Controllers\Auth\AuthTokenController::class,"postToken"]);
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get("/profile", [ProfileController::class, "index"])->name("profile");
 Route::get("/profile/twofactorauth", [ProfileController::class, "manageTwoFactorAuth"])->name("profile.2fa.manage");
