@@ -10,7 +10,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{route("profile.2fa.phone")}}" method="post">
+                        <form action="{{route("2fa.token")}}" method="post">
                             @csrf
 
                             <div class="form-group mb-3">
