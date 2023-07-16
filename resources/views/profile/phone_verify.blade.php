@@ -10,7 +10,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{route("profile.2fa.phone")}}" method="post">
+                        <form action="{{route("profile.2fa.phone")}}" method="POST">
                             @csrf
 
                             <div class="form-group mb-3">
@@ -18,7 +18,7 @@
                                 <input type="text" class="form-control @error("token") is-invalid @enderror"
                                        name="token" placeholder="Please enter your token">
                                 @error("token")
-                                <span class="invalid-feedback">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{$message}}</strong>
                                     </span>
                                 @enderror
