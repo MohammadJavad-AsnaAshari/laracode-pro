@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ActiveCode;
 use App\Models\User;
+use App\Notifications\ActiveCodeNotification;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -39,8 +40,8 @@ class ProfileController extends Controller
                 // create a new code
                 $code = ActiveCode::generateCode($request->user());
                 $request->session()->flash("phone", $data["phone"]);
-                // send the code to the user phone number
-                // TODO Send SMS
+                 //TODO send the code to the user phone number
+                $request->user()->notify(new ActiveCodeNotification($code, $data["phone"]));
 
                 return redirect(route("profile.2fa.phone"));
             } else {
