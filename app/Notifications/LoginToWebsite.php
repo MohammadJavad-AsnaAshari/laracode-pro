@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LoginToWebsiteNotification extends Notification implements shouldQueue
+class LoginToWebsite extends Notification implements shouldQueue
 {
     use Queueable;
 

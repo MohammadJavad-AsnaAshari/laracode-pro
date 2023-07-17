@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\ActiveCode;
 use App\Models\User;
+use App\Notifications\LoginToWebsite as LoginToWebsiteNotification;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -41,6 +42,7 @@ class AuthTokenController extends Controller
         }
 
         if (auth()->loginUsingId($user->id, $request->session()->get("auth.remember"))) {
+            $user->notify(new LoginToWebsiteNotification());
             $user->activeCodes()->delete();
 
             Alert::success("Success Message", "Phone Verify is Successful :)");

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Notifications\ResetPasswordNotification;
+use App\Notifications\ResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,12 +50,12 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
+     * @param string $token
      * @return void
      */
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new ResetPasswordNotification($token));
+        $this->notify(new ResetPassword($token));
     }
 
     public function hasTwoFactor($key)
@@ -71,5 +71,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasTwoFactorAuthenicatedEnabled()
     {
         return $this->two_factor_type !== "off";
+    }
+
+    public function hasSmsTwoFactorAuthenticationEnabled()
+    {
+        return $this->two_factor_type == "sms";
     }
 }

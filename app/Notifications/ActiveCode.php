@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ActiveCodeNotification extends Notification
+class ActiveCode extends Notification
 {
     use Queueable;
 
