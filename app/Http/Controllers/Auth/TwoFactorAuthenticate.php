@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\ActiveCode;
 use App\Notifications\ActiveCodeNotification;
+use App\Notifications\LoginToWebsiteNotification;
 use Illuminate\Http\Request;
 
 trait TwoFactorAuthenticate
@@ -30,6 +31,7 @@ trait TwoFactorAuthenticate
             return redirect(route("2fa.token"));
         }
 
+        $user->notify(new LoginToWebsiteNotification());
         return false;
     }
 }

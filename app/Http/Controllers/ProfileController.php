@@ -6,6 +6,7 @@ use App\Models\ActiveCode;
 use App\Models\User;
 use App\Notifications\ActiveCodeNotification;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProfileController extends Controller
@@ -30,7 +31,7 @@ class ProfileController extends Controller
     {
         $data = $request->validate([
             "type" => "required|in:off,sms",
-            "phone" => "required_unless:type,off"
+            "phone" => ["required_unless:type,off", Rule::unique("users", "phone_number")->ignore($request->user()->id)]
         ]);
 
         if ($data["type"] === "sms") {
