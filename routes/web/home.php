@@ -32,12 +32,12 @@ Route::post("/auth/token", [AuthTokenController::class, "postToken"]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix("profile")->middleware(["auth", "verified"])->group(function () {
-    Route::get("/profile", [IndexController::class, "index"])->name("profile");
-    Route::get("/profile/twofactorauth", [TwoFactorAuthController::class, "manageTwoFactorAuth"])->name("profile.2fa.manage");
-    Route::post("/profile/twofactorauth", [TwoFactorAuthController::class, "postManageTwoFactorAuth"]);
+    Route::get("/", [IndexController::class, "index"])->name("profile");
+    Route::get("/twofactorauth", [TwoFactorAuthController::class, "manageTwoFactorAuth"])->name("profile.2fa.manage");
+    Route::post("/twofactorauth", [TwoFactorAuthController::class, "postManageTwoFactorAuth"]);
 
-    Route::get("/profile/twofactorauth/phone", [TokenAuthController::class, "getPhoneVerify"])->name("profile.2fa.phone");
-    Route::post("/profile/twofactorauth/phone", [TokenAuthController::class, "postPhoneVerify"]);
+    Route::get("/twofactorauth/phone", [TokenAuthController::class, "getPhoneVerify"])->name("profile.2fa.phone");
+    Route::post("/twofactorauth/phone", [TokenAuthController::class, "postPhoneVerify"]);
 
 });
 

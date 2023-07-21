@@ -42,7 +42,7 @@ class AuthTokenController extends Controller
         }
 
         if (auth()->loginUsingId($user->id, $request->session()->get("auth.remember"))) {
-            $user->notify(new LoginToWebsiteNotification());
+//            $user->notify(new LoginToWebsiteNotification());
             $user->activeCodes()->delete();
 
             Alert::success("Success Message", "Phone Verify is Successful :)");

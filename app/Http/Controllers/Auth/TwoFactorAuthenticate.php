@@ -15,7 +15,7 @@ trait TwoFactorAuthenticate
             return $this->logoutAndRedirectToTokenEntry($request, $user);
         }
 
-        $user->notify(new LoginToWebsiteNotification());
+//        $user->notify(new LoginToWebsiteNotification());
         return false;
     }
 
@@ -31,7 +31,7 @@ trait TwoFactorAuthenticate
 
         if ($user->hasSmsTwoFactorAuthenticationEnabled()) {
             $code = ActiveCode::generateCode($user);
-            $user->notify(new ActiveCodeNotification($code,$user->phone_number));
+//            $user->notify(new ActiveCodeNotification($code,$user->phone_number));
             $request->session()->push("auth.using_sms", true);
         }
 

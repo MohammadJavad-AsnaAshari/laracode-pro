@@ -24,7 +24,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         "two_factor_type",
-        "phone_number"
+        "phone_number",
+        "is_superuser",
+        "is_staff",
     ];
 
     /**
@@ -76,5 +78,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasSmsTwoFactorAuthenticationEnabled()
     {
         return $this->two_factor_type == "sms";
+    }
+
+    public function isSuperUser()
+    {
+        return $this->is_superuser;
+    }
+
+    public function isStaff()
+    {
+        return $this->is_staff;
     }
 }

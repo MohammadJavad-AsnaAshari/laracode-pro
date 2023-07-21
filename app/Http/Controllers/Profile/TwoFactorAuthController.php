@@ -85,7 +85,7 @@ class TwoFactorAuthController extends Controller
         $code = ActiveCode::generateCode($request->user());
 
         // send the code to user phone number
-        $request->user()->notify(new ActiveCodeNotification($code, $phone));
+//        $request->user()->notify(new ActiveCodeNotification($code, $phone));
 
         return redirect(route("profile.2fa.phone"));
     }
