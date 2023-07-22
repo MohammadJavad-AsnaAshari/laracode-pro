@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get("/", function () {
-    return view("admin.master");
+    return view("admin.index");
 });
 
-Route::get("/fuck", function () {
-    return "fuck";
+Route::get("/users", function () {
+    return view("admin.users.all");
 });
