@@ -58,6 +58,11 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                @if(Auth::user()->is_superuser)
+                                    <a href="{{url("/admin")}}" class="dropdown-item">
+                                        Admin Panel
+                                    </a>
+                                @endif
                                 <a href="{{url("/profile")}}" class="dropdown-item">
                                     Profile
                                 </a>

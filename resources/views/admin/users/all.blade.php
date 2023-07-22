@@ -1,22 +1,63 @@
-@component("admin.layouts.contenct", ["title" => "Users List"])
+@component("admin.layouts.contenct", ["title" => "لیست کاربران"])
     @slot("breadcrumb")
-        <li class="breadcrumb-item"><a href="/admin">Admin Panel</a></li>
-        <li class="breadcrumb-item active">Users List</li>
+        <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
+        <li class="breadcrumb-item active">لیست کاربران</li>
     @endslot
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad commodi, culpa debitis deserunt doloribus earum
-        enim error eveniet excepturi exercitationem facere harum, hic id illum ipsam ipsum itaque libero magni maxime
-        minus molestiae molestias, natus nemo nobis obcaecati omnis placeat quas quia quod sequi suscipit temporibus
-        totam veritatis vero voluptates voluptatum. A deleniti impedit in, molestiae perspiciatis rem reprehenderit.
-        Amet aspernatur aut consequatur distinctio doloribus eaque, earum eum exercitationem modi non obcaecati placeat
-        quasi ratione rem sunt vel, voluptatum. A alias animi aut, consequatur corporis culpa distinctio doloremque ex
-        exercitationem impedit incidunt ipsum laborum molestiae molestias mollitia necessitatibus nemo pariatur qui quos
-        ratione reprehenderit, rerum temporibus. Animi asperiores deserunt, dicta dolorem doloremque eos facilis fugiat
-        ipsa iure magni minima modi omnis, quo recusandae repellat rerum tempora ut. Et porro, voluptatum. Atque,
-        deserunt et eum fuga ipsam nobis quidem! Animi corporis dolorum exercitationem impedit laborum laudantium magni
-        quibusdam. Aspernatur eius fugiat harum hic iure tempore velit! Aperiam aut blanditiis doloremque ea esse fugiat
-        harum nihil optio, quam suscipit, vel veritatis. Accusamus, beatae, culpa dolore ducimus ea eligendi in iure
-        laudantium maiores necessitatibus numquam optio quam quisquam tempora vitae! Accusamus consequuntur, debitis
-        dolorum est maiores modi nesciunt pariatur quibusdam quisquam unde.</p>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">فرم کاربران</h3>
+
+                    <div class="card-tools d-flex">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="btn-group-sm mr-2">
+                            <a href="{{route("admin.users.create")}}" class="btn btn-info">ایجاد کاربر جدید</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr>
+                            <th>آیدی کاربر</th>
+                            <th>نام کاربر</th>
+                            <th>ایمیل</th>
+                            <th>وضعیت ایمیل</th>
+                            <th>اقدامات</th>
+                        </tr>
+                        @foreach($users as $user)
+                            <tr>
+                                <td>{{$user->id}}</td>
+                                <td>{{$user->name}}</td>
+                                <td>{{$user->email}}</td>
+                                @if($user->email_verified_at)
+                                    <td><span class="badge badge-success">فعال</span></td>
+                                @else
+                                    <td><span class="badge badge-danger">غیر فعال</span></td>
+                                @endif
+                                <td>
+                                    <a href="{{route("admin.users.edit" , ["user" => $user->id])}}"
+                                       class="btn btn-primary btn-sm">ویرایش</a>
+                                    <a href="" class="btn btn-danger btn-sm">حذف</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
 @endcomponent
 
 
