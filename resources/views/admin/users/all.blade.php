@@ -43,10 +43,15 @@
                                 @else
                                     <td><span class="badge badge-danger">غیر فعال</span></td>
                                 @endif
-                                <td>
+                                <td class="d-flex">
                                     <a href="{{route("admin.users.edit" , ["user" => $user->id])}}"
                                        class="btn btn-primary btn-sm">ویرایش</a>
-                                    <a href="" class="btn btn-danger btn-sm">حذف</a>
+                                    <form action="{{route("admin.users.destroy", ["user" => $user->id])}}" method="post">
+                                        @csrf
+                                        @method("delete")
+                                        <button class="btn btn-danger btn-sm mr-1">حذف</button>
+                                    </form>
+{{--                                    <a href="" class="btn btn-danger btn-sm">حذف</a>--}}
                                 </td>
                             </tr>
                         @endforeach
@@ -54,6 +59,9 @@
                     </table>
                 </div>
                 <!-- /.card-body -->
+                <div class="card-footer">
+                    {{$users->render()}}
+                </div>
             </div>
             <!-- /.card -->
         </div>

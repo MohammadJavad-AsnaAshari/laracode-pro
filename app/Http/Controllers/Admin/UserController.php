@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Rules\Recaptcha;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -15,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(20);
+        $users = User::paginate(5);
         return view("admin.users.all", compact("users"));
     }
 
@@ -44,6 +45,7 @@ class UserController extends Controller
             $user->markEmailAsVerified();
         }
 
+        Alert::success('User Account Successfully Create :)', 'Success Message');
         return redirect(route("admin.users.index"));
     }
 
@@ -88,14 +90,19 @@ class UserController extends Controller
             $user->markEmailAsVerified();
         }
 
+        Alert::success('User Account Successfully Update :)', 'Success Message');
         return redirect(route("admin.users.index"));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+
+        $user->delete();
+
+        Alert::success('User Account Successfully Delete !', 'Warning Message');
+        return back();
     }
 }

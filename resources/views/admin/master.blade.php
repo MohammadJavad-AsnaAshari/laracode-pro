@@ -105,12 +105,6 @@
 <script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="/plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-{{--<script src="/dist/js/adminlte.js"></script>--}}
-{{--<!-- AdminLTE dashboard demo (This is only for demo purposes) -->--}}
-{{--<script src="/dist/js/pages/dashboard.js"></script>--}}
-{{--<!-- AdminLTE for demo purposes -->--}}
-{{--<script src="/dist/js/demo.js"></script>--}}
-{{--@vite(["resources/js/admin.js"])--}}
+@include('sweetalert::alert')
 </body>
 </html>
