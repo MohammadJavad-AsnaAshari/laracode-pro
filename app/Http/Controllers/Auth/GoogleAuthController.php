@@ -24,14 +24,18 @@ class GoogleAuthController extends Controller
         try {
             $googleUser = Socialite::driver("google")->user();
             $user = User::where("email", $googleUser->email)->first();
-//            return "test";
 
             if (!$user) {
                 $user = User::create([
                     "name" => $googleUser->name,
                     "email" => $googleUser->email,
-                    "password" => bcrypt(Str::random(16))
+                    "password" => bcrypt(Str::random(16)),
+                    "two_factor_type" => "off",
                 ]);
+            }
+
+            if (!$user->hasVerifiedEmail()) {
+                $user->markEmailAsVerified();
             }
 
             auth()->loginUsingId($user->id);
