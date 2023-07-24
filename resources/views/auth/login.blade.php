@@ -54,9 +54,8 @@
                             </div>
 
                             <div class="form-group col-md-8 offset-md-4 mb-3">
-{{--                                <div class="g-recaptcha @error('g-recaptcha-response') is-invalid @enderror" data-sitekey="{{env("GOOGLE_RECAPTCHA_SITE_KEY")}}"></div>--}}
 
-                                @recaptcha
+                                <x-recaptcha :has-error="$errors->has('g-recaptcha-response')"></x-recaptcha>
 
                                 @error('g-recaptcha-response')
                                 <span class="invalid-feedback" role="alert">
