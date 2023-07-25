@@ -6,11 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Rules\Recaptcha;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:edit-user,user")->only(["edit"]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -79,6 +85,24 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+//        if (Gate::allows("edit-user", $user)) {
+//            return view("admin.users.edit", compact("user"));
+//        }
+//        abort(403);
+
+//        if (Gate::denies("edit-user", $user)) {
+//            abort(403);
+//        }
+//        return view("admin.users.edit", compact("user"));
+
+//        $this->authorize("edit-user", $user);
+//        return view("admin.users.edit", compact("user"));
+
+//        if (auth()->user()->can("edit-user", $user)) {
+//            return view("admin.users.edit", compact("user"));
+//        }
+//        abort(403);
+
         return view("admin.users.edit", compact("user"));
     }
 
