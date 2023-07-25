@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware("can:edit-user,user")->only(["edit"]);
+        $this->middleware("can:edit,user")->only(["edit"]);
     }
 
     /**
@@ -85,23 +85,13 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-//        if (Gate::allows("edit-user", $user)) {
+//        if (Gate::allows("edit", $user)) {
 //            return view("admin.users.edit", compact("user"));
 //        }
 //        abort(403);
 
-//        if (Gate::denies("edit-user", $user)) {
-//            abort(403);
-//        }
+//        $this->authorize("edit", $user);
 //        return view("admin.users.edit", compact("user"));
-
-//        $this->authorize("edit-user", $user);
-//        return view("admin.users.edit", compact("user"));
-
-//        if (auth()->user()->can("edit-user", $user)) {
-//            return view("admin.users.edit", compact("user"));
-//        }
-//        abort(403);
 
         return view("admin.users.edit", compact("user"));
     }

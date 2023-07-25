@@ -49,7 +49,7 @@
                                     <td><span class="badge badge-danger">غیر فعال</span></td>
                                 @endif
                                 <td class="d-flex">
-                                    @can("edit-user", $user)
+                                    @can("edit", $user)
                                         <a href="{{route("admin.users.edit" , ["user" => $user->id])}}"
                                            class="btn btn-primary btn-sm">ویرایش
                                         </a>
