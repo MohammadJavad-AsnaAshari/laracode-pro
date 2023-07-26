@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Profile\IndexController;
 use App\Http\Controllers\Profile\TokenAuthController;
 use App\Http\Controllers\Profile\TwoFactorAuthController;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+//    auth()->loginUsingId(9);
+    if (Gate::allows("edit")) {
+        return view('welcome');
+    }
+    abort(403);
 });
 
 Auth::routes(["verify" => true]);
