@@ -45,17 +45,17 @@
                                 <p>لیست کاربران</p>
                             </a>
                         </li>
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="./index2.html" class="nav-link">--}}
-{{--                                <i class="fa fa-circle-o nav-icon"></i>--}}
-{{--                                <p>اجازه دسترسی</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
+                        {{--                        <li class="nav-item">--}}
+                        {{--                            <a href="./index2.html" class="nav-link">--}}
+                        {{--                                <i class="fa fa-circle-o nav-icon"></i>--}}
+                        {{--                                <p>اجازه دسترسی</p>--}}
+                        {{--                            </a>--}}
+                        {{--                        </li>--}}
                     </ul>
                 </li>
-                <li class="nav-item has-treeview {{isActive(["admin.permissions.index"], "menu-open")}}">
+                <li class="nav-item has-treeview {{isActive(["admin.permissions.index", "admin.roles.index"], "menu-open")}}">
                     <a href="#"
-                       class="nav-link {{isActive("admin.permissions.index")}}">
+                       class="nav-link {{isActive(["admin.permissions.index", "admin.roles.index"])}}">
                         <i class="nav-icon fa fa-user"></i>
                         <p>
                             بخش اجازه دسترسی ها
@@ -73,8 +73,8 @@
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#"
-                               class="nav-link {{isActive(["admin.permission.index"])}}">
+                            <a href="{{route("admin.roles.index")}}"
+                               class="nav-link {{isActive(["admin.roles.index"])}}">
                                 <i class="fa fa-circle-o nav-icon"></i>
                                 <p>همه مقام ها</p>
                             </a>

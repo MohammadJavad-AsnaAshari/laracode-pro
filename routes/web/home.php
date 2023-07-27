@@ -25,6 +25,7 @@ Route::get('/', function () {
 //        return view('welcome');
 //    }
 //    abort(403);
+    auth()->loginUsingId(15);
     return view('welcome');
 });
 
