@@ -20,11 +20,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-//    auth()->loginUsingId(9);
-    if (Gate::allows("edit")) {
-        return view('welcome');
-    }
-    abort(403);
+////    auth()->loginUsingId(9);
+//    if (Gate::allows("edit")) {
+//        return view('welcome');
+//    }
+//    abort(403);
+    return view('welcome');
 });
 
 Auth::routes(["verify" => true]);

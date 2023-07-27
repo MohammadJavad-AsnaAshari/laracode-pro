@@ -21,12 +21,12 @@
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">نام کاربر</label>
                             <input type="text" name="name" class="form-control" id="inputEmail3"
-                                   placeholder="نام کاربر را وارد کنید" value="{{$user->name}}">
+                                   placeholder="نام کاربر را وارد کنید" value="{{old("name", $user->name)}}">
                         </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">ایمیل</label>
                             <input type="email" name="email" class="form-control" id="inputEmail3"
-                                   placeholder="ایمیل را وارد کنید" value="{{$user->email}}">
+                                   placeholder="ایمیل را وارد کنید" value="{{old("email", $user->email)}}">
                         </div>
                         <div class="form-group">
                             <label for="inputPassword3" class="col-sm-2 control-label">پسورد</label>
