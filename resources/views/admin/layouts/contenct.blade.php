@@ -20,8 +20,13 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-           {{ $slot }}
+            {{ $slot }}
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 @endsection
+
+@section("script")
+    {{ $script ?? "" }}
+@endsection
+

@@ -85,7 +85,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->is_superuser;
     }
 
-    public function isStaff()
+    public function isStaffUser()
     {
         return $this->is_staff;
     }

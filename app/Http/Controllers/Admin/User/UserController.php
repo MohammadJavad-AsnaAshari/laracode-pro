@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Rules\Recaptcha;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -14,7 +12,6 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware("can:edit,user")->only(["edit"]);
     }
 
     /**

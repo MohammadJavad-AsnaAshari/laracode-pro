@@ -24,8 +24,11 @@
     <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker-bs3.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+    <link rel="stylesheet" href="/plugins/select2/select2.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
     <!-- bootstrap rtl -->
 {{--    <link rel="stylesheet" href="/dist/css/bootstrap-rtl.min.css">--}}
     <!-- template rtl version -->
@@ -105,6 +108,10 @@
 <script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="/plugins/fastclick/fastclick.js"></script>
+
+<script src="/plugins/select2/select2.full.js"></script>
+@yield("script")
+
 @include('sweetalert::alert')
 </body>
 </html>

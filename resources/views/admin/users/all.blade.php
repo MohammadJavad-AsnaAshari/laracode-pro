@@ -23,7 +23,8 @@
 
                         <div class="btn-group-sm mr-2">
                             <a href="{{route("admin.users.create")}}" class="btn btn-info">ایجاد کاربر جدید</a>
-                            <a href="{{request()->fullUrlWithQuery(["admin" => 1])}}" class="btn btn-warning">کاربران مدیر</a>
+                            <a href="{{request()->fullUrlWithQuery(["admin" => 1])}}" class="btn btn-warning">کاربران
+                                مدیر</a>
                         </div>
                     </div>
                 </div>
@@ -49,11 +50,13 @@
                                     <td><span class="badge badge-danger">غیر فعال</span></td>
                                 @endif
                                 <td class="d-flex">
-                                    @can("edit", $user)
-                                        <a href="{{route("admin.users.edit" , ["user" => $user->id])}}"
-                                           class="btn btn-primary btn-sm">ویرایش
-                                        </a>
-                                    @endcan
+                                    @if($user->isStaffUser() || $user->isSuperUser())
+                                        <a href="{{route("admin.users.permissions", ["user" => $user->id])}}"
+                                           class="btn btn-warning btn-sm ml-1">دسترسی ها</a>
+                                    @endif
+                                    <a href="{{route("admin.users.edit" , ["user" => $user->id])}}"
+                                       class="btn btn-primary btn-sm">ویرایش
+                                    </a>
                                     <form action="{{route("admin.users.destroy", ["user" => $user->id])}}"
                                           method="post">
                                         @csrf
