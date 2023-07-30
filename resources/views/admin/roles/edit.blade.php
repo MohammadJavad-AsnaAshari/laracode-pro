@@ -42,7 +42,7 @@
                                 @foreach(Permission::all() as $permission)
                                     <option value="{{$permission->id}}"
                                         {{in_array($permission->id, $role->permissions->pluck('id')->toArray()) ? 'selected' : ''}}>
-                                        {{$permission->name}} // {{$permission->label}}
+                                        {{$permission->name}} - {{$permission->label}}
                                     </option>
                                 @endforeach
                             </select>

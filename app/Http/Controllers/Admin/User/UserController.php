@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\User;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -12,6 +13,10 @@ class UserController extends Controller
 {
     public function __construct()
     {
+        $this->middleware("can:show-users")->only("index");
+        $this->middleware("can:create-user")->only(["create", "store"]);
+        $this->middleware("can:edit-user")->only(["edit", "update"]);
+        $this->middleware("can:delete-user")->only("destroy");
     }
 
     /**
@@ -29,12 +34,20 @@ class UserController extends Controller
             });
         }
 
-        if (\request("admin")) {
+        if (Gate::allows("show-staff-users")) {
+            if (\request("admin")) {
+                $users->where(function ($query) {
+                    $query->where("is_superuser", 1)
+                        ->orWhere("is_staff", 1);
+                });
+            }
+        } else {
             $users->where(function ($query) {
-                $query->where("is_superuser", 1)
-                    ->orWhere("is_staff", 1);
+                $query->where("is_superuser", 0)
+                    ->orWhere("is_staff", 0);
             });
         }
+
 
         $users = $users->latest()->paginate(10);
         return view("admin.users.all", compact("users"));

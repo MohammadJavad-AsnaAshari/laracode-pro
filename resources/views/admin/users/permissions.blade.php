@@ -30,7 +30,7 @@
                             @foreach(Role::all() as $role)
                                 <option
                                     value="{{$role->id}}" {{in_array($role->id, $user->roles->pluck('id')->toArray()) ? 'selected' : ''}}>
-                                    {{$role->name}} // {{$role->label}}</option>
+                                    {{$role->name}} - {{$role->label}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -41,7 +41,7 @@
                             @foreach(Permission::all() as $permission)
                                 <option
                                     value="{{$permission->id}}" {{in_array($permission->id, $user->permissions->pluck('id')->toArray()) ? 'selected' : ''}}>
-                                    {{$permission->name}} // {{$permission->label}}</option>
+                                    {{$permission->name}} - {{$permission->label}}</option>
                             @endforeach
                         </select>
                     </div>

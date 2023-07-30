@@ -58,7 +58,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                @if(Auth::user()->is_superuser)
+                                @if(Auth::user()->isSuperUser() || Auth::user()->isStaffUser())
                                     <a href="{{url("/admin")}}" class="dropdown-item">
                                         Admin Panel
                                     </a>
