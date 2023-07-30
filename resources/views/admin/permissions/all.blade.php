@@ -22,7 +22,10 @@
                         </form>
 
                         <div class="btn-group-sm mr-2">
-                            <a href="{{route("admin.permissions.create")}}" class="btn btn-info">ایجاد دسترسی جدید</a>
+                            @can("create-permission	")
+                                <a href="{{route("admin.permissions.create")}}" class="btn btn-info">ایجاد دسترسی
+                                    جدید</a>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -40,15 +43,19 @@
                                 <td>{{$permission->name}}</td>
                                 <td>{{$permission->label}}</td>
                                 <td class="d-flex">
-                                    <a href="{{ route('admin.permissions.edit' ,$permission->id) }}"
-                                       class="btn btn-sm btn-primary">ویرایش</a>
-                                    <form
-                                        action="{{route("admin.permissions.destroy", ["permission" => $permission->id])}}"
-                                        method="post">
-                                        @csrf
-                                        @method("delete")
-                                        <button class="btn btn-danger btn-sm mr-1">حذف</button>
-                                    </form>
+                                    @can("edit-permission")
+                                        <a href="{{ route('admin.permissions.edit' ,$permission->id) }}"
+                                           class="btn btn-sm btn-primary">ویرایش</a>
+                                    @endcan
+                                    @can("delete-permission")
+                                        <form
+                                            action="{{route("admin.permissions.destroy", ["permission" => $permission->id])}}"
+                                            method="post">
+                                            @csrf
+                                            @method("delete")
+                                            <button class="btn btn-danger btn-sm mr-1">حذف</button>
+                                        </form>
+                                    @endcan()
                                 </td>
                             </tr>
                         @endforeach
