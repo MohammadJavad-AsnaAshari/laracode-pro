@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthTokenController;
 use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Profile\IndexController;
 use App\Http\Controllers\Profile\TokenAuthController;
 use App\Http\Controllers\Profile\TwoFactorAuthController;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    auth()->loginUsingId(5);
+    auth()->loginUsingId(15);
     return view('welcome');
 });
 
@@ -47,3 +48,6 @@ Route::prefix("profile")->middleware(["auth", "verified"])->group(function () {
 Route::get("/secret", function () {
     return "secret";
 })->middleware("password.confirm");
+
+Route::get("products", [ProductController::class, "index"]);
+Route::get("products/{product}", [ProductController::class, "single"]);
