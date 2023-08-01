@@ -18,9 +18,6 @@ class RoleController extends Controller
         $this->middleware("can:delete-role")->only("destroy");
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $roles = Role::query();

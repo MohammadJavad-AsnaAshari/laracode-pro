@@ -95,14 +95,6 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-//        if (Gate::allows("edit", $user)) {
-//            return view("admin.users.edit", compact("user"));
-//        }
-//        abort(403);
-
-//        $this->authorize("edit", $user);
-//        return view("admin.users.edit", compact("user"));
-
         return view("admin.users.edit", compact("user"));
     }
 

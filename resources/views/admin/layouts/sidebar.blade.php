@@ -1,14 +1,14 @@
-@php use Illuminate\Support\Facades\Route; @endphp
+@php use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\Route; @endphp
 <div class="sidebar" style="direction: ltr">
     <div style="direction: rtl">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="https://www.gravatar.com/avatar/52f0fbcbedee04a121cba8dad1174462?s=200&d=mm&r=g"
+                <img src="/img/the-journey-within-kamdon-simmons.jpg"
                      class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
+                <a href="#" class="d-block">{{Auth::user()->name}}</a>
             </div>
         </div>
 
@@ -46,12 +46,6 @@
                                     <p>لیست کاربران</p>
                                 </a>
                             </li>
-                            {{--                        <li class="nav-item">--}}
-                            {{--                            <a href="./index2.html" class="nav-link">--}}
-                            {{--                                <i class="fa fa-circle-o nav-icon"></i>--}}
-                            {{--                                <p>اجازه دسترسی</p>--}}
-                            {{--                            </a>--}}
-                            {{--                        </li>--}}
                         </ul>
                     </li>
                 @endcan
@@ -89,6 +83,27 @@
                         @endcan
                     </li>
                 @endcanany
+                @can("show-products")
+                    <li class="nav-item has-treeview {{isActive(["admin.products.index", "admin.products.create", "admin.products.edit"], "menu-open")}}">
+                        <a href="#"
+                           class="nav-link {{isActive(["admin.products.index", "admin.products.create", "admin.products.edit"])}}">
+                            <i class="nav-icon fa fa-user"></i>
+                            <p>
+                                محصولات
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route("admin.products.index")}}"
+                                   class="nav-link {{isActive(["admin.products.index", "admin.products.create", "admin.products.edit"])}}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>لیست محصولات</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcan
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

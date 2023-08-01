@@ -63,7 +63,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    {{$roles->render()}}
+                    {{$roles->appends(["search" => request("search")])->render()}}
                 </div>
             </div>
             <!-- /.card -->

@@ -1,13 +1,13 @@
-@component("admin.layouts.contenct", ["title" => "دسترسی ها"])
+@component("admin.layouts.contenct", ["title" => "لیست محصولات"])
     @slot("breadcrumb")
         <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
-        <li class="breadcrumb-item active">دسترسی ها</li>
+        <li class="breadcrumb-item active">لیست محصولات</li>
     @endslot
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">فرم دسترسی</h3>
+                    <h3 class="card-title">فرم محصولات</h3>
 
                     <div class="card-tools d-flex">
 
@@ -22,9 +22,8 @@
                         </form>
 
                         <div class="btn-group-sm mr-2">
-                            @can("create-permission	")
-                                <a href="{{route("admin.permissions.create")}}" class="btn btn-info">ایجاد دسترسی
-                                    جدید</a>
+                            @can("create-product")
+                                <a href="{{route("admin.products.create")}}" class="btn btn-info">ایجاد محصول جدید</a>
                             @endcan
                         </div>
                     </div>
@@ -34,28 +33,38 @@
                     <table class="table table-hover">
                         <tbody>
                         <tr>
-                            <th>نام دسترسی</th>
-                            <th>توضیح دسترسی</th>
+                            <th>آیدی محصول</th>
+                            <th>نام محصول</th>
+                            <th>توضیح محصول</th>
+                            <th>تعداد موجودی</th>
+                            <th>تعداد بازدید</th>
+                            <th>قیمت</th>
                             <th>اقدامات</th>
                         </tr>
-                        @foreach($permissions as $permission)
+                        @foreach($products as $product)
                             <tr>
-                                <td>{{$permission->name}}</td>
-                                <td>{{$permission->label}}</td>
+                                <td>{{$product->id}}</td>
+                                <td>{{$product->title}}</td>
+                                <td>{{$product->description}}</td>
+                                <td>{{$product->inventory}}</td>
+                                <td>{{$product->view_count}}</td>
+                                <td>{{$product->price}}</td>
+
                                 <td class="d-flex">
-                                    @can("edit-permission")
-                                        <a href="{{ route('admin.permissions.edit' ,$permission->id) }}"
-                                           class="btn btn-sm btn-primary">ویرایش</a>
+                                    @can("edit-product")
+                                        <a href="{{route("admin.products.edit" , ["product" => $product->id])}}"
+                                           class="btn btn-primary btn-sm">ویرایش
+                                        </a>
                                     @endcan
-                                    @can("delete-permission")
-                                        <form
-                                            action="{{route("admin.permissions.destroy", ["permission" => $permission->id])}}"
-                                            method="post">
+                                    @can("delete-product")
+                                        <form action="{{route("admin.products.destroy", ["product" => $product->id])}}"
+                                              method="post">
                                             @csrf
                                             @method("delete")
                                             <button class="btn btn-danger btn-sm mr-1">حذف</button>
                                         </form>
-                                    @endcan()
+                                    @endcan
+                                    {{--                                    <a href="" class="btn btn-danger btn-sm">حذف</a>--}}
                                 </td>
                             </tr>
                         @endforeach
@@ -64,7 +73,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    {{$permissions->appends(["search" => request("search")])->render()}}
+                    {{$products->appends(["search" => request("search")])->render()}}
                 </div>
             </div>
             <!-- /.card -->

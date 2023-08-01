@@ -17,7 +17,7 @@ class PermissionController extends Controller
         $this->middleware("can:edit-permission")->only(["edit", "update"]);
         $this->middleware("can:delete-permission")->only("destroy");
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -59,14 +59,6 @@ class PermissionController extends Controller
 
         Alert::success('User Account Successfully Create :)', 'Success Message');
         return redirect(route("admin.permissions.index"));
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Permission $permission)
-    {
-        //
     }
 
     /**
