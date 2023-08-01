@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->integer("price");
 
             $table->integer("inventory")->default(0);
-            $table->integer("view_count");
+            $table->integer("view_count")->default(0);
             $table->timestamps();
         });
     }
