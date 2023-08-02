@@ -21,13 +21,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $product = \App\Models\Product::find(3);
+    $comment = \App\Models\Comment::find(8);
 
-    $product->comments()->create([
-        "user_id" => auth()->user()->id,
-        "comment" => "this is a comment 12:27",
-    ]);
-    return $product->comments()->get();
+    return $comment->commentable;
 
     auth()->loginUsingId(15);
     return view('welcome');
