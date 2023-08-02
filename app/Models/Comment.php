@@ -10,7 +10,7 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable = [
-        "comment", "approved", "parent_id", "user_id"
+        "comment", "approved", "parent_id", "commentable_id", "commentable_type"
     ];
 
     public function user()

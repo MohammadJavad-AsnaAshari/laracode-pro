@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthTokenController;
 use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Profile\IndexController;
 use App\Http\Controllers\Profile\TokenAuthController;
@@ -21,11 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $comment = \App\Models\Comment::find(8);
-
-    return $comment->commentable;
-
-    auth()->loginUsingId(15);
+    auth()->loginUsingId(5);
     return view('welcome');
 });
 
@@ -55,3 +52,4 @@ Route::get("/secret", function () {
 
 Route::get("products", [ProductController::class, "index"]);
 Route::get("products/{product}", [ProductController::class, "single"]);
+Route::post("comments", [HomeController::class, "comment"])->name("send.comment");

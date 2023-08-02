@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class HomeController extends Controller
 {
@@ -24,5 +25,20 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function comment(Request $request)
+    {
+        $data = $request->validate([
+            "commentable_id" => "required",
+            "commentable_type" => "required",
+            "parent_id" => "required",
+            "comment" => "required"
+        ]);
+
+        auth()->user()->comments()->create($data);
+
+        Alert::success('Your Comment Successfully Send :)', 'Success Message');
+        return back();
     }
 }
