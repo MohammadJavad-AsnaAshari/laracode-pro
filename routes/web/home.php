@@ -23,10 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $product = \App\Models\Product::find(3);
 
-    auth()->user()->comments()->create([
-        "comment" => "this is a comment 12:03",
-        "commentable_id" => $product->id,
-        "commentable_type" => get_class($product)
+    $product->comments()->create([
+        "user_id" => auth()->user()->id,
+        "comment" => "this is a comment 12:27",
     ]);
     return $product->comments()->get();
 
