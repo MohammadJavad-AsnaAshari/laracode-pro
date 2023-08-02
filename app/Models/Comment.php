@@ -12,4 +12,9 @@ class Comment extends Model
     protected $fillable = [
         "comment", "approved", "parent_id", "commentable_id", "commentable_type"
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

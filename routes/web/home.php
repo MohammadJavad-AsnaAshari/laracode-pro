@@ -21,6 +21,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $product = \App\Models\Product::find(3);
+
+    auth()->user()->comments()->create([
+        "comment" => "this is a comment 12:03",
+        "commentable_id" => $product->id,
+        "commentable_type" => get_class($product)
+    ]);
+    return $product->comments()->get();
+
     auth()->loginUsingId(15);
     return view('welcome');
 });

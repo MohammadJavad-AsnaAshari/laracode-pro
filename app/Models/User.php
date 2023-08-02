@@ -75,6 +75,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Product::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function hasTwoFactorAuthenicatedEnabled()
     {
         return $this->two_factor_type !== "off";
