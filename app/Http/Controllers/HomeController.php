@@ -29,6 +29,12 @@ class HomeController extends Controller
 
     public function comment(Request $request)
     {
+        if(! $request->ajax()) {
+            return response()->json([
+                'status' => 'just ajax request'
+            ]);
+        }
+
         $data = $request->validate([
             "commentable_id" => "required",
             "commentable_type" => "required",
@@ -38,7 +44,8 @@ class HomeController extends Controller
 
         auth()->user()->comments()->create($data);
 
-        Alert::success('Your Comment Successfully Send :)', 'Success Message');
-        return back();
+        return response()->json([
+            'status' => 'success'
+        ]);
     }
 }

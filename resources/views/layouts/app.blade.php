@@ -87,6 +87,8 @@
         @yield('content')
     </main>
 </div>
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('assets/jquery.js') }}"></script>
 @yield("script")
 @include('sweetalert::alert')
 </body>
