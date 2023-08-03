@@ -111,39 +111,8 @@
                     <div class="alert alert-warning">برای ثبت نظر لطفا وارد سایت شوید.</div>
                 @endguest
 
-                @foreach($product->comments()->where('parent_id' , 0)->get() as $comment )
-                    <div class="card {{ ! $loop->first ? 'mt-3' : '' }}">
-                        <div class="card-header d-flex justify-content-between">
-                            <div class="commenter">
-                                <span>{{ $comment->user->name }}</span>
-                                <span class="text-muted">- دو دقیقه قبل</span>
-                            </div>
-                            @auth
-                                <span class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                      data-bs-target="#sendComment" data-id="{{ $comment->id }}">پاسخ به نظر</span>
-                            @endauth
-                        </div>
+                @include("layouts.comments", ["comments" => $product->comments()->where('parent_id' , 0)->get()])
 
-                        <div class="card-body">
-                            {{ $comment->comment }}
-
-                            @foreach($comment->child as $childComment)
-                                <div class="card mt-3">
-                                    <div class="card-header d-flex justify-content-between">
-                                        <div class="commenter">
-                                            <span>{{ $childComment->user->name }}</span>
-                                            <span class="text-muted">- دو دقیقه قبل</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-body">
-                                        {{ $childComment->comment }}
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                @endforeach
             </div>
         </div>
     </div>
