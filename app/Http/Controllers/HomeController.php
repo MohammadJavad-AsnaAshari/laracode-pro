@@ -29,11 +29,11 @@ class HomeController extends Controller
 
     public function comment(Request $request)
     {
-        if(! $request->ajax()) {
-            return response()->json([
-                'status' => 'just ajax request'
-            ]);
-        }
+//        if(! $request->ajax()) {
+//            return response()->json([
+//                'status' => 'just ajax request'
+//            ]);
+//        }
 
         $data = $request->validate([
             "commentable_id" => "required",
@@ -44,8 +44,11 @@ class HomeController extends Controller
 
         auth()->user()->comments()->create($data);
 
-        return response()->json([
-            'status' => 'success'
-        ]);
+//        return response()->json([
+//           'status' => 'success'
+//        ]);
+
+        alert()->success('نظر با موفقیت ثبت شد');
+        return back();
     }
 }
