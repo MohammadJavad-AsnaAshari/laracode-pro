@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
@@ -20,3 +21,6 @@ Route::resource("permissions", PermissionController::class)->except(["show"]);
 Route::resource("roles", RoleController::class)->except(["show"]);
 
 Route::resource("products", ProductController::class)->except(["show"]);
+
+Route::get("comments/unapproved" , [CommentController::class, "unapproved"])->name("comments.unapproved");
+Route::resource("comments", CommentController::class)->only(["index", "update", "destroy"]);

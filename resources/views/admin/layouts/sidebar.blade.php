@@ -55,7 +55,7 @@
                            class="nav-link {{isActive(["admin.permissions.index", "admin.roles.index"])}}">
                             <i class="nav-icon fa fa-user"></i>
                             <p>
-                                بخش اجازه دسترسی ها
+                                اجازه دسترسی ها
                                 <i class="right fa fa-angle-left"></i>
                             </p>
                         </a>
@@ -104,6 +104,40 @@
                         </ul>
                     </li>
                 @endcan
+                @canany(["show-comments", "show-unapproved"])
+                    <li class="nav-item has-treeview {{isActive(["admin.comments.index", "admin.comments.unapproved"], "menu-open")}}">
+                        <a href="#"
+                           class="nav-link {{isActive(["admin.comments.index", "admin.comments.unapproved"])}}">
+                            <i class="nav-icon fa fa-user"></i>
+                            <p>
+                                نظرات
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        @can("show-comments")
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route("admin.comments.index")}}"
+                                       class="nav-link {{isActive(["admin.comments.index"])}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>نظرات تایید شده</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endcan
+                        @can("show-unapproved")
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route("admin.comments.unapproved")}}"
+                                       class="nav-link {{isActive(["admin.comments.unapproved"])}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>نظرات تایید نشده</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endcan
+                    </li>
+                @endcanany
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
