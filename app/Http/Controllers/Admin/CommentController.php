@@ -14,13 +14,40 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::whereApproved(1)->latest()->paginate(10);
+        $comments = Comment::query();
+
+        if ($keyword = request("search")) {
+            $comments->where(function ($query) use ($keyword) {
+                $query->where("comment", "like", "%{$keyword}%")
+                    ->orWhereHas("user", function ($subQuery) use ($keyword) {
+                        $subQuery->where("name", "like", "%{$keyword}%");
+                    });
+            });
+        }
+
+        $comments = $comments->whereApproved(1)->latest()->paginate(10);
         return view("admin.comments.all", compact("comments"));
     }
 
     public function unapproved()
     {
-        $comments = Comment::whereApproved(0)->latest()->paginate(10);
+        $comments = Comment::query();
+
+//        if ($keyword = \request("search")) {
+//            $comments->where(function ($query) use ($keyword) {
+//                $query->where("comment", "like", "%{$keyword}%")
+//                    ->orWhereHas("user", function ($subQuery) use ($keyword) {
+//                        $subQuery->where("name", "like", "%{$keyword}%");
+//                    });
+//            });
+//        }
+        if($keyword = request('search')) {
+            $comments->where('comment' , 'LIKE' , "%{$keyword}%")->orWhereHas('user' , function($query) use ($keyword) {
+                $query->where('name' , 'LIKE' , "%{$keyword}%");
+            });
+        }
+
+        $comments = $comments->whereApproved(0)->latest()->paginate(10);
         return view("admin.comments.unapproved", compact("comments"));
     }
 
