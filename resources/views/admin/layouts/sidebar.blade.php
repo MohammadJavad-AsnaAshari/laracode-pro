@@ -104,6 +104,27 @@
                         </ul>
                     </li>
                 @endcan
+                @can("show-products")
+                    <li class="nav-item has-treeview {{isActive(["admin.categories.index", "admin.categories.create", "admin.categories.edit"], "menu-open")}}">
+                        <a href="#"
+                           class="nav-link {{isActive(["admin.categories.index", "admin.categories.create", "admin.categories.edit"])}}">
+                            <i class="nav-icon fa fa-user"></i>
+                            <p>
+                                دسته بندی ها
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route("admin.categories.index")}}"
+                                   class="nav-link {{isActive(["admin.categories.index", "admin.categories.create", "admin.categories.edit"])}}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>لیست دسته بندی ها</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcan
                 @canany(["show-comments", "show-unapproved"])
                     <li class="nav-item has-treeview {{isActive(["admin.comments.index", "admin.comments.unapproved"], "menu-open")}}">
                         <a href="#"
