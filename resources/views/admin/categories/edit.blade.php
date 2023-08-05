@@ -4,6 +4,13 @@
         <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
         <li class="breadcrumb-item"><a href="{{ route("admin.categories.index") }}">لیست دسته ها</a></li>
     @endslot
+
+    @slot("script")
+        <script>
+            $("#categories").select2({"placeholder": "دسترسی مورد نظر را انتخاب کنید"})
+        </script>
+    @endslot
+
     <div class="row">
         <div class="col-lg-12">
             @include("admin.layouts.errors")

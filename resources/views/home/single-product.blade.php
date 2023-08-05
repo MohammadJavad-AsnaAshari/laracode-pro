@@ -92,6 +92,12 @@
                     </div>
 
                     <div class="card-body">
+                        @if($product->categories)
+                            @foreach(@$product->categories as $category)
+                                <a href="">{{$category->name}}</a>
+                            @endforeach
+                        @endif
+                        <br>
                         {{ $product->description }}
                     </div>
                 </div>

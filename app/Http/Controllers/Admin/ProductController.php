@@ -55,9 +55,11 @@ class ProductController extends Controller
             'description' => ['required', 'string'],
             'inventory' => ['required', 'string'],
             'price' => ['required', 'string'],
+            'categories' => ["required"]
         ]);
 
-        auth()->user()->products()->create($data);
+        $product = auth()->user()->products()->create($data);
+        $product->categories()->sync($data["categories"]);
 
         Alert::success('Product Successfully Create :)', 'Success Message');
         return redirect(route("admin.products.index"));
@@ -81,9 +83,11 @@ class ProductController extends Controller
             'description' => ['required', 'string'],
             'inventory' => ['required', 'string'],
             'price' => ['required', 'string'],
+            'categories' => ["required"]
         ]);
 
         $product->update($data); // Update the specific product instance
+        $product->categories()->sync($data["categories"]);
 
         Alert::success('Product Successfully Edit :)', 'Success Message');
         return redirect(route("admin.products.index"));
