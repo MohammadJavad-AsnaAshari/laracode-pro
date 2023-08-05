@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
@@ -24,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.categories.create");
     }
 
     /**
@@ -32,7 +33,20 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            "name" => "required|min:3",
+        ]);
+
+        if ($request->parent_id) {
+            $data["parent_id"] = $request->validate([
+                "parent_id" => "exists:categories,id"
+            ])["parent_id"];
+        }
+
+        $category = Category::create($data);
+
+        Alert::success('Category Successfully Create :)', 'Success Message');
+        return redirect(route("admin.categories.index"));
     }
 
     /**
@@ -46,24 +60,39 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        //
+        return view("admin.categories.edit", compact("category"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $data = $request->validate([
+            "name" => "required|min:3",
+        ]);
+
+        if ($request->parent_id) {
+            $data["parent_id"] = $request->validate([
+                "parent_id" => "exists:categories,id"
+            ])["parent_id"];
+        }
+
+        $category->update($data);
+
+        Alert::success('Category Successfully Update :)', 'Success Message');
+        return redirect(route("admin.categories.index"));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        Alert::success('Category Successfully Delete !', 'Success Message');
+        return back();
     }
 }

@@ -10,7 +10,7 @@
                     </form>
                     <a href="#" onclick="event.preventDefault(); document.getElementById('cate-{{ $category->id }}-delete').submit()" class="badge badge-danger">حذف</a>
                     <a href="{{ route('admin.categories.edit' , $category->id) }}" class="badge badge-primary">ویرایش</a>
-                    <a href="{{ route('admin.categories.create') }}?parent={{ $category->id }}" class="badge badge-warning">ثبت زیر دسته</a>
+                    <a href="{{ route('admin.categories.create') }}?parent_id={{ $category->id }}" class="badge badge-warning">ثبت زیر دسته</a>
                 </div>
             </div>
             @if($category->child->count())
