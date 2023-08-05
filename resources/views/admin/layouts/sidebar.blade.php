@@ -50,9 +50,9 @@
                     </li>
                 @endcan
                 @canany(["show-permissions", "show-roles"])
-                    <li class="nav-item has-treeview {{isActive(["admin.permissions.index", "admin.roles.index"], "menu-open")}}">
+                    <li class="nav-item has-treeview {{isActive(["admin.permissions.index", "admin.roles.index", "admin.permissions.create", "admin.permissions.edit" , "admin.roles.create", "admin.roles.edit"], "menu-open")}}">
                         <a href="#"
-                           class="nav-link {{isActive(["admin.permissions.index", "admin.roles.index"])}}">
+                           class="nav-link {{isActive(["admin.permissions.index", "admin.roles.index", "admin.permissions.create", "admin.permissions.edit" , "admin.roles.create", "admin.roles.edit"])}}">
                             <i class="nav-icon fa fa-user"></i>
                             <p>
                                 اجازه دسترسی ها
@@ -62,8 +62,8 @@
                         @can("show-permissions")
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{route("admin.permissions.index")}}"
-                                       class="nav-link {{isActive(["admin.permissions.index"])}}">
+                                    <a href="{{route("admin.permissions.index", "admin.permissions.create", "admin.permissions.edit")}}"
+                                       class="nav-link {{isActive(["admin.permissions.index", "admin.permissions.create", "admin.permissions.edit"])}}">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>همه دسترسی ها</p>
                                     </a>
@@ -73,8 +73,8 @@
                         @can("show-roles")
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{route("admin.roles.index")}}"
-                                       class="nav-link {{isActive(["admin.roles.index"])}}">
+                                    <a href="{{route("admin.roles.index", "admin.roles.create", "admin.roles.edit")}}"
+                                       class="nav-link {{isActive(["admin.roles.index", "admin.roles.create", "admin.roles.edit"])}}">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>همه مقام ها</p>
                                     </a>
