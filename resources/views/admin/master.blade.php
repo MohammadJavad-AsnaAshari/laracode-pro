@@ -37,7 +37,7 @@
 {{--    <link rel="stylesheet" href="{{ asset("build/assets/admin.css") }}">--}}
 
     @vite(['resources/sass/admin.scss', "resources/js/admin.js"])
-
+    @yield("head")
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">

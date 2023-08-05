@@ -1,4 +1,4 @@
-@component("admin.layouts.contenct", ["title" => "ویرایش دسترسی"])
+@component("admin.layouts.content", ["title" => "ویرایش دسترسی"])
     @slot("breadcrumb")
         <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
         <li class="breadcrumb-item"><a href="{{ route("admin.permissions.index") }}">دسترسی ها</a></li>
@@ -12,7 +12,8 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form class="form-horizontal" action="{{route("admin.permissions.update", ["permission" => $permission->id])}}"
+                <form class="form-horizontal"
+                      action="{{route("admin.permissions.update", ["permission" => $permission->id])}}"
                       method="POST">
                     @csrf
                     @method("patch")

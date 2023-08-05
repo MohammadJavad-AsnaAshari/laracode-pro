@@ -1,5 +1,5 @@
 @php use App\Models\Permission; @endphp
-@component("admin.layouts.contenct", ["title" => "ایجاد مقام جدید"])
+@component("admin.layouts.content", ["title" => "ایجاد مقام جدید"])
     @slot("breadcrumb")
         <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
         <li class="breadcrumb-item"><a href="{{ route("admin.roles.index") }}">مقام ها</a></li>

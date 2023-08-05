@@ -1,4 +1,4 @@
-@component("admin.layouts.contenct", ["title" => "لیست نظرات"])
+@component("admin.layouts.content", ["title" => "لیست نظرات"])
     @slot("breadcrumb")
         <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
         <li class="breadcrumb-item active">لیست نظرات</li>

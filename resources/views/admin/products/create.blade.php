@@ -1,4 +1,4 @@
-@component("admin.layouts.contenct", ["title" => "ایجاد محصول جدید"])
+@component("admin.layouts.content", ["title" => "ایجاد محصول جدید"])
     @slot("breadcrumb")
         <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
         <li class="breadcrumb-item"><a href="{{ route("admin.products.index") }}">لیست محصولات</a></li>
@@ -39,11 +39,11 @@
                     </div>
                     <!-- /.card-body -->
                     <div class=" card-footer">
-                            <button type="submit" class="btn btn-info">ثبت محصول</button>
-                            <a href=" {{route("admin.products.index")}} " type="submit"
-                               class="btn btn-default float-left">لغو</a>
-                        </div>
-                        <!-- /.card-footer -->
+                        <button type="submit" class="btn btn-info">ثبت محصول</button>
+                        <a href=" {{route("admin.products.index")}} " type="submit"
+                           class="btn btn-default float-left">لغو</a>
+                    </div>
+                    <!-- /.card-footer -->
                 </form>
             </div>
         </div>

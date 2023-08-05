@@ -1,4 +1,4 @@
-@component("admin.layouts.contenct", ["title" => "پنل مدیریت"])
+@component("admin.layouts.content", ["title" => "پنل مدیریت"])
     @slot("breadcrumb")
         <li class="breadcrumb-item active">پنل مدیریت</li>
         <li class="breadcrumb-item"><a href="{{ route("admin.users.index") }}">لیست کاربران</a></li>

@@ -30,3 +30,7 @@
     {{ $script ?? "" }}
 @endsection
 
+@section("head")
+    {{ $head ?? "" }}
+@endsection
+

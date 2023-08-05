@@ -1,4 +1,4 @@
-@component("admin.layouts.contenct", ["title" => "دسترسی ها"])
+@component("admin.layouts.content", ["title" => "دسترسی ها"])
     @slot("breadcrumb")
         <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
         <li class="breadcrumb-item active">دسترسی ها</li>
@@ -49,8 +49,8 @@
                                     @endcan
                                     @can("delete-permission")
                                         <form
-                                            action="{{route("admin.permissions.destroy", ["permission" => $permission->id])}}"
-                                            method="post">
+                                                action="{{route("admin.permissions.destroy", ["permission" => $permission->id])}}"
+                                                method="post">
                                             @csrf
                                             @method("delete")
                                             <button class="btn btn-danger btn-sm mr-1">حذف</button>

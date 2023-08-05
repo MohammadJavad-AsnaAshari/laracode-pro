@@ -1,5 +1,5 @@
 @php use App\Models\Permission; @endphp
-@component("admin.layouts.contenct", ["title" => "ویرایش مقام"])
+@component("admin.layouts.content", ["title" => "ویرایش مقام"])
     @slot("breadcrumb")
         <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
         <li class="breadcrumb-item"><a href="{{ route("admin.roles.index") }}">مقام ها</a></li>
@@ -41,7 +41,7 @@
                             <select name="permissions[]" id="permissions" class="form-control" multiple>
                                 @foreach(Permission::all() as $permission)
                                     <option value="{{$permission->id}}"
-                                        {{in_array($permission->id, $role->permissions->pluck('id')->toArray()) ? 'selected' : ''}}>
+                                            {{in_array($permission->id, $role->permissions->pluck('id')->toArray()) ? 'selected' : ''}}>
                                         {{$permission->name}} - {{$permission->label}}
                                     </option>
                                 @endforeach

@@ -1,4 +1,4 @@
-@component("admin.layouts.contenct", ["title" => "ویرایش محصول"])
+@component("admin.layouts.content", ["title" => "ویرایش محصول"])
     @slot("breadcrumb")
         <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
         <li class="breadcrumb-item"><a href="{{ route("admin.products.index") }}">لیست محصولات</a></li>
@@ -12,7 +12,8 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form class="form-horizontal" action="{{route("admin.products.update", ["product" => $product->id])}}" method="POST">
+                <form class="form-horizontal" action="{{route("admin.products.update", ["product" => $product->id])}}"
+                      method="POST">
                     @csrf
                     @method("patch")
 
@@ -30,7 +31,8 @@
                         <div class="form-group">
                             <label for="inventory" class="col-sm-2 control-label">موجودی</label>
                             <input type="number" name="inventory" class="form-control" id="inventory"
-                                   placeholder="تعداد موجودی را وارد کنید" value="{{old("inventory", $product->inventory)}}">
+                                   placeholder="تعداد موجودی را وارد کنید"
+                                   value="{{old("inventory", $product->inventory)}}">
                         </div>
                         <div class="form-group">
                             <label for="price" class="col-sm-2 control-label">قیمت</label>
