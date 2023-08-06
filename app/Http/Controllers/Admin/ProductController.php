@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -55,11 +56,27 @@ class ProductController extends Controller
             'description' => ['required', 'string'],
             'inventory' => ['required', 'string'],
             'price' => ['required', 'string'],
-            'categories' => ["required"]
+            'categories' => ["required"],
+            "attributes" => ["array"],
         ]);
 
         $product = auth()->user()->products()->create($data);
         $product->categories()->sync($data["categories"]);
+
+        $attributes = collect($data["attributes"]);
+        $attributes->each(function ($item) use ($product) {
+            if (is_null($item["name"]) || is_null($item["value"])) return;
+
+            $attr = Attribute::firstOrCreate([
+                    "name" => $item["name"]]
+            );
+
+            $attr_value = $attr->values()->firstOrCreate([
+                    "value" => $item["value"]]
+            );
+
+            $product->attributes()->attach($attr->id, ["value_id" => $attr_value->id]);
+        });
 
         Alert::success('Product Successfully Create :)', 'Success Message');
         return redirect(route("admin.products.index"));
@@ -83,7 +100,8 @@ class ProductController extends Controller
             'description' => ['required', 'string'],
             'inventory' => ['required', 'string'],
             'price' => ['required', 'string'],
-            'categories' => ["required"]
+            'categories' => ["required"],
+            "attributes" => ["array"],
         ]);
 
         $product->update($data); // Update the specific product instance

@@ -48,7 +48,7 @@
                                    placeholder="قیمت را وارد کنید" value="{{old("price", $product->price)}}">
                         </div>
                         <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">دسترسی ها</label>
+                            <label for="inputEmail3" class="col-sm-2 control-label">دسته بندی ها</label>
                             <select name="categories[]" id="categories" class="form-control" multiple>
                                 @foreach(Category::all() as $category)
                                     <option value="{{$category->id}}"
