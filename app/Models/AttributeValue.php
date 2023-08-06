@@ -10,4 +10,14 @@ class AttributeValue extends Model
     use HasFactory;
 
     protected $fillable = ["value"];
+
+    public function attribute()
+    {
+        return $this->belongsTo(AttributeValue::class);
+    }
+
+    public function product()
+    {
+        //ToDo attribute_product relationship
+    }
 }

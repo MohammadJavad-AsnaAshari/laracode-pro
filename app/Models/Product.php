@@ -27,4 +27,14 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public function attributes()
+    {
+        return $this->belongsToMany(Attribute::class);
+    }
+
+    public function value()
+    {
+        //ToDo attribute_product relationship
+    }
 }
