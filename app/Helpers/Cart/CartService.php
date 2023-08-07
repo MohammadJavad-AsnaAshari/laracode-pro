@@ -65,7 +65,7 @@ class CartService
             ? $this->cart->where("subject_id", $key->id)->where("subject_type", get_class($key))->first()
             : $this->cart->firstWhere("id", $key);
 
-        return $item;
+        return $this->withRelationshipIfExist($item);
     }
 
     /**
@@ -73,6 +73,31 @@ class CartService
      */
     public function all()
     {
-        return $this->cart;
+        $cart = $this->cart;
+        $cart = $cart->map(function ($item){
+            return $this->withRelationshipIfExist($item);
+        });
+
+        return $cart;
+    }
+
+    /**
+     * @param $item
+     * @return mixed
+     */
+    protected function withRelationshipIfExist($item)
+    {
+        if (isset($item["subject_id"]) && isset($item["subject_type"])) {
+            $class = $item["subject_type"];
+            $subject = (new $class())->find($item["subject_id"]);
+
+            $item[strtolower(class_basename($subject))] = $subject;
+
+            unset($item["subject_id"]);
+            unset($item["subject_type"]);
+
+            return $item;
+        };
+        return $item;
     }
 }
