@@ -10,7 +10,9 @@ class CartController extends Controller
 {
     public function addToCart(Product $product)
     {
-//        return session()->get("cart");
+//        return Cart::get("5Hm5lEUm7s");
+//        return Cart::get($product);
+        return Cart::all();
         if(!Cart::has($product)) {
             Cart::put([
                 "quantity" => 100,
