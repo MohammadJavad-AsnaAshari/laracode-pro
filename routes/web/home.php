@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthTokenController;
 use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Profile\IndexController;
@@ -55,6 +56,6 @@ Route::get("products/{product}", [ProductController::class, "single"]);
 Route::post("comments", [HomeController::class, "comment"])->name("send.comment");
 
 Route::get("cart", function () {
-    dd(Cart::get("2"));
-    return view("home.cart");
+
 });
+Route::post("cart/add/{product}", [CartController::class, "addToCart"])->name("cart.add");
