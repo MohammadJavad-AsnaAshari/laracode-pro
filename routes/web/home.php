@@ -55,7 +55,5 @@ Route::get("products", [ProductController::class, "index"]);
 Route::get("products/{product}", [ProductController::class, "single"]);
 Route::post("comments", [HomeController::class, "comment"])->name("send.comment");
 
-Route::get("cart", function () {
-
-});
+Route::get("cart", [CartController::class, "cart"]);
 Route::post("cart/add/{product}", [CartController::class, "addToCart"])->name("cart.add");
