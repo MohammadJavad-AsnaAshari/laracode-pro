@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    auth()->loginUsingId(5);
+    auth()->loginUsingId(15);
     return view('welcome');
 });
 
@@ -53,3 +53,8 @@ Route::get("/secret", function () {
 Route::get("products", [ProductController::class, "index"]);
 Route::get("products/{product}", [ProductController::class, "single"]);
 Route::post("comments", [HomeController::class, "comment"])->name("send.comment");
+
+Route::get("cart", function () {
+    dd(Cart::get("2"));
+    return view("home.cart");
+});
