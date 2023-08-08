@@ -3,26 +3,26 @@
 
 @section('script')
     <script>
-        function changeQuantity(event, id , cartName = null) {
+        function changeQuantity(event, id, cartName = null) {
             //
             $.ajaxSetup({
-                headers : {
-                    'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content,
-                    'Content-Type' : 'application/json'
+                headers: {
+                    'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json'
                 }
             })
 
             //
             $.ajax({
-                type : 'POST',
-                url : '/cart/quantity/change',
-                data : JSON.stringify({
-                    id : id ,
-                    quantity : event.target.value,
+                type: 'POST',
+                url: '/cart/quantity/change',
+                data: JSON.stringify({
+                    id: id,
+                    quantity: event.target.value,
                     // cart : cartName,
-                    _method : 'patch'
+                    _method: 'patch'
                 }),
-                success : function(res) {
+                success: function (res) {
                     location.reload();
                 }
             });
@@ -81,7 +81,8 @@
                                         تومان
                                     </td>
                                     <td class="align-middle p-4">
-                                        <select onchange="changeQuantity(event, '{{ $cart['id'] }}')" class="form-control text-center">
+                                        <select onchange="changeQuantity(event, '{{ $cart['id'] }}')"
+                                                class="form-control text-center">
                                             @foreach(range(1,$product->inventory) as $item)
                                                 <option
                                                     value="{{$item}}" {{$cart['quantity'] == $item ? 'selected' : ''}}>{{$item}}
@@ -91,10 +92,18 @@
                                     </td>
                                     <td class="text-right font-weight-semibold align-middle p-4">
                                         تومان {{$cart["product"]->price * $cart["quantity"]}}</td>
-                                    <td class="text-center align-middle px-0"><a href="#"
-                                                                                 class="shop-tooltip close float-none text-danger"
-                                                                                 title=""
-                                                                                 data-original-title="Remove">×</a>
+                                    <td class="text-center align-middle px-0">
+                                        <form action="{{route("cart.destroy", $cart["id"])}}"
+                                              id="delete-cart-{{$product->id}}" method="post">
+                                            @csrf
+                                            @method("delete")
+                                            <a href="#"
+                                               onclick="event.preventDefault();document.getElementById('delete-cart-{{$product->id}}').submit()"
+                                               class="shop-tooltip close float-none text-danger"
+                                            >
+                                                ×
+                                            </a>
+                                        </form>
                                     </td>
                                 </tr>
                             @endif

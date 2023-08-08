@@ -32,18 +32,25 @@ class CartController extends Controller
     public function quantityChange(Request $request)
     {
         $data = $request->validate([
-           "quantity" => ["required"],
-           "id" => ["required"],
+            "quantity" => ["required"],
+            "id" => ["required"],
         ]);
 
-        if (Cart::has($data["id"])){
+        if (Cart::has($data["id"])) {
             Cart::update($data["id"], [
-               "quantity" => $data["quantity"]
+                "quantity" => $data["quantity"]
             ]);
 
             return response(["status" => "success"]);
         }
 
         return response(["status" => "error"], 404);
+    }
+
+    public function deleteFromCart($id)
+    {
+        Cart::delete($id);
+
+        return back();
     }
 }
