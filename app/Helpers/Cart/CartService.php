@@ -70,6 +70,10 @@ class CartService
             ]);
         }
 
+        if (is_array($options)) {
+            $item = $item->merge($options);
+        }
+
         $this->put($item->toArray());
         return $this;
     }

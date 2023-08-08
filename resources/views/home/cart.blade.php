@@ -1,6 +1,36 @@
 @php use App\Helpers\Cart\Cart; @endphp
 @extends('layouts.app')
 
+@section('script')
+    <script>
+        function changeQuantity(event, id , cartName = null) {
+            //
+            $.ajaxSetup({
+                headers : {
+                    'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type' : 'application/json'
+                }
+            })
+
+            //
+            $.ajax({
+                type : 'POST',
+                url : '/cart/quantity/change',
+                data : JSON.stringify({
+                    id : id ,
+                    quantity : event.target.value,
+                    // cart : cartName,
+                    _method : 'patch'
+                }),
+                success : function(res) {
+                    location.reload();
+                }
+            });
+        }
+
+    </script>
+@endsection
+
 @section('content')
     <div class="container px-3 my-5 clearfix">
         <!-- Shopping cart table -->
@@ -51,15 +81,16 @@
                                         تومان
                                     </td>
                                     <td class="align-middle p-4">
-                                        <select name="" class="form-control text-center">
+                                        <select onchange="changeQuantity(event, '{{ $cart['id'] }}')" class="form-control text-center">
                                             @foreach(range(1,$product->inventory) as $item)
                                                 <option
-                                                    value="{{$item}}" {{$cart['quantity'] === $item ? 'selected' : ''}}>{{$item}}</option>
+                                                    value="{{$item}}" {{$cart['quantity'] == $item ? 'selected' : ''}}>{{$item}}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </td>
                                     <td class="text-right font-weight-semibold align-middle p-4">
-                                        تومان {{$product->price * $cart["quantity"]}}</td>
+                                        تومان {{$cart["product"]->price * $cart["quantity"]}}</td>
                                     <td class="text-center align-middle px-0"><a href="#"
                                                                                  class="shop-tooltip close float-none text-danger"
                                                                                  title=""
@@ -83,7 +114,7 @@
                             <label class="text-muted font-weight-normal m-0">قیمت کل</label>
                             @php
                                 $totalPrice = Cart::all()->sum(function ($cart){
-                                    return $cart["price"] * $cart["quantity"];
+                                    return $cart["product"]->price * $cart["quantity"];
                                 });
                             @endphp
                             <div class="text-large"><strong> {{$totalPrice}}تومان </strong></div>
