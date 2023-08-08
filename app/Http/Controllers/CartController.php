@@ -10,18 +10,19 @@ class CartController extends Controller
 {
     public function addToCart(Product $product)
     {
-//        return Cart::get("5Hm5lEUm7s");
-//        return Cart::get($product);
-        return Cart::all();
-        if(!Cart::has($product)) {
+        if (Cart::has($product)) {
+           if (Cart::cout($product) < $product->inventory){
+               Cart::update($product, 1);
+           }
+        } else {
             Cart::put([
-                "quantity" => 100,
+                "quantity" => 1,
                 "price" => $product->price,
             ],
                 $product
             );
         }
-        return "ok";
+        return redirect("/cart");
     }
 
     public function cart()

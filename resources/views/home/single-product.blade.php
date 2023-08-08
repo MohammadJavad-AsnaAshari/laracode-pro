@@ -1,3 +1,4 @@
+@php use App\Helpers\Cart\Cart; @endphp
 @extends('layouts.app')
 
 @section('script')
@@ -88,13 +89,16 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        {{ $product->title }}
-                        <form action="{{route("cart.add", $product->id)}}" method="post" id="add-to-card">
-                            @csrf
-                        </form>
-                        <span class="btn btn-sm btn-danger" onclick="document.getElementById('add-to-card').submit()">
-                            اضافه کردن به سبد خرید
-                        </span>
+                        @if(Cart::count($product) < $product->inventory)
+                            {{ $product->title }}
+                            <form action="{{route("cart.add", $product->id)}}" method="post" id="add-to-card">
+                                @csrf
+                            </form>
+                            <span class="btn btn-sm btn-danger"
+                                  onclick="document.getElementById('add-to-card').submit()">
+                                اضافه کردن به سبد خرید
+                            </span>
+                        @endif
                     </div>
 
                     <div class="card-body">

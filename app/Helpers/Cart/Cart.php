@@ -11,6 +11,8 @@ use Ramsey\Collection\Collection;
  * @method static Collection all();
  * @method static array get($key);
  * @method static Cart put(array $value, Model $obj = null);
+ * @method static Cart update($key, $options);
+ * @method static int count($key);
  */
 class Cart extends Facade
 {

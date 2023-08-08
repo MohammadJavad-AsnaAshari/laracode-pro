@@ -27,7 +27,7 @@ class CartService
                 "subject_id" => $obj->id,
                 "subject_type" => get_class($obj)
             ]);
-        } else {
+        } elseif (!isset($value["id"])) {
             $value = array_merge($value, [
                 "id" => Str::random(10)
             ]);
@@ -57,15 +57,34 @@ class CartService
 
     /**
      * @param $key
+     * @param $options
+     * @return $this
+     */
+    public function update($key, $options)
+    {
+        $item = collect($this->get($key, false));
+
+        if (is_numeric($options)) {
+            $item = $item->merge([
+                "quantity" => $item["quantity"] + $options,
+            ]);
+        }
+
+        $this->put($item->toArray());
+        return $this;
+    }
+
+    /**
+     * @param $key
      * @return null
      */
-    public function get($key)
+    public function get($key, $withRelationShip = true)
     {
         $item = $key instanceof Model
             ? $this->cart->where("subject_id", $key->id)->where("subject_type", get_class($key))->first()
             : $this->cart->firstWhere("id", $key);
 
-        return $this->withRelationshipIfExist($item);
+        return $withRelationShip ? $this->withRelationshipIfExist($item) : $item;
     }
 
     /**
@@ -74,11 +93,22 @@ class CartService
     public function all()
     {
         $cart = $this->cart;
-        $cart = $cart->map(function ($item){
+        $cart = $cart->map(function ($item) {
             return $this->withRelationshipIfExist($item);
         });
 
         return $cart;
+    }
+
+    /**
+     * @param $key
+     * @return int|mixed
+     */
+    public function count($key)
+    {
+        if (!$this->has($key)) return 0;
+
+        return $this->get($key)["quantity"];
     }
 
     /**
