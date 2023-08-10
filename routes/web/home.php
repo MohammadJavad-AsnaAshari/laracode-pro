@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthTokenController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Profile\IndexController;
 use App\Http\Controllers\Profile\TokenAuthController;
@@ -36,14 +37,17 @@ Route::post("/auth/token", [AuthTokenController::class, "postToken"]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix("profile")->middleware(["auth", "verified"])->group(function () {
-    Route::get("/", [IndexController::class, "index"])->name("profile");
-    Route::get("/twofactorauth", [TwoFactorAuthController::class, "manageTwoFactorAuth"])->name("profile.2fa.manage");
-    Route::post("/twofactorauth", [TwoFactorAuthController::class, "postManageTwoFactorAuth"]);
+Route::middleware(["auth", "verified"])->group(function () {
+    Route::prefix("profile")->group(function () {
+        Route::get("/", [IndexController::class, "index"])->name("profile");
+        Route::get("/twofactorauth", [TwoFactorAuthController::class, "manageTwoFactorAuth"])->name("profile.2fa.manage");
+        Route::post("/twofactorauth", [TwoFactorAuthController::class, "postManageTwoFactorAuth"]);
 
-    Route::get("/twofactorauth/phone", [TokenAuthController::class, "getPhoneVerify"])->name("profile.2fa.phone");
-    Route::post("/twofactorauth/phone", [TokenAuthController::class, "postPhoneVerify"]);
-
+        Route::get("/twofactorauth/phone", [TokenAuthController::class, "getPhoneVerify"])->name("profile.2fa.phone");
+        Route::post("/twofactorauth/phone", [TokenAuthController::class, "postPhoneVerify"]);
+    });
+    Route::post("comments", [HomeController::class, "comment"])->name("send.comment");
+    Route::post("payment", [PaymentController::class, "payment"])->name("cart.payment");
 });
 
 
@@ -53,7 +57,7 @@ Route::get("/secret", function () {
 
 Route::get("products", [ProductController::class, "index"]);
 Route::get("products/{product}", [ProductController::class, "single"]);
-Route::post("comments", [HomeController::class, "comment"])->name("send.comment");
+
 
 Route::get("cart", [CartController::class, "cart"]);
 Route::post("cart/add/{product}", [CartController::class, "addToCart"])->name("cart.add");
