@@ -13,6 +13,7 @@ use Ramsey\Collection\Collection;
  * @method static Cart put(array $value, Model $obj = null);
  * @method static Cart update($key, $options);
  * @method static int count($key);
+ * @method static Cart instance(string $name);
  */
 class Cart extends Facade
 {

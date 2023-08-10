@@ -8,10 +8,12 @@ use Illuminate\Support\Str;
 class CartService
 {
     protected $cart;
+    protected $name = "default";
 
     public function __construct()
     {
-        $this->cart = session()->get("cart") ?? collect([]);
+        $this->cart = session()->get($this->name) ?? collect([]);
+//        $this->cart = collect(json_decode(request()->cookie($this->name) , true)) ?? collect([]);
     }
 
     /**
@@ -34,7 +36,8 @@ class CartService
         }
 
         $this->cart->put($value["id"], $value);
-        session()->put("cart", $this->cart);
+        session()->put($this->name, $this->cart);
+//        Cookie::queue($this->name , $this->cart->toJson() , 60 * 24 * 7 );
 
         return $this;
     }
@@ -118,7 +121,8 @@ class CartService
                 return $key != $item["id"];
             });
 
-            session()->put("cart", $this->cart);
+            session()->put($this->name, $this->cart);
+//            Cookie::queue($this->name , $this->cart->toJson() , 60 * 24 * 7 );
             return true;
         }
 
@@ -154,5 +158,18 @@ class CartService
             return $item;
         };
         return $item;
+    }
+
+    /**
+     * @param string $name
+     * @return $this
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
+    public function instance(string $name)
+    {
+        $this->cart = session()->get($name) ?? collect([]);
+        $this->name = $name;
+        return $this;
     }
 }

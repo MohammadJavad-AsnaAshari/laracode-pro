@@ -10,12 +10,14 @@ class CartController extends Controller
 {
     public function addToCart(Product $product)
     {
-        if (Cart::has($product)) {
-            if (Cart::cout($product) < $product->inventory) {
-                Cart::update($product, 1);
+        $cart = Cart::instance("cart");
+
+        if ($cart->has($product)) {
+            if ($cart->count($product) < $product->inventory) {
+                $cart->update($product, 1);
             }
         } else {
-            Cart::put([
+            $cart->put([
                 "quantity" => 1,
             ],
                 $product
@@ -34,10 +36,13 @@ class CartController extends Controller
         $data = $request->validate([
             "quantity" => ["required"],
             "id" => ["required"],
+            "cart" => ["required"]
         ]);
 
-        if (Cart::has($data["id"])) {
-            Cart::update($data["id"], [
+        $cart = Cart::instance("cart");
+
+        if ($cart->has($data["id"])) {
+            $cart->update($data["id"], [
                 "quantity" => $data["quantity"]
             ]);
 
@@ -49,7 +54,9 @@ class CartController extends Controller
 
     public function deleteFromCart($id)
     {
-        Cart::delete($id);
+        $cart = Cart::instance("cart");
+
+        $cart->delete($id);
 
         return back();
     }
