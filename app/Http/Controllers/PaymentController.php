@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Cart\Cart;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Psy\Util\Str;
 
@@ -34,6 +35,7 @@ class PaymentController extends Controller
                 $token = config('services.payping.token');
                 $res_number = \Illuminate\Support\Str::random();
                 $args = [
+//                    "amount" => $price,
                     "amount" => 1000,
                     "payerName" => auth()->user()->name,
                     "returnUrl" => route('payment.callback'),
@@ -64,8 +66,36 @@ class PaymentController extends Controller
         return back();
     }
 
-    public function callback()
+    public function callback(Request $request)
     {
+        $payment = Payment::where("resnumber", $request->clientrefid)->firstOrFail();
 
+        $token = config('services.payping.token');
+
+        $payping = new \PayPing\Payment($token);
+
+        try {
+//            $payment->price
+            if ($payping->verify($request->refid, 1000)) {
+                $payment->update([
+                    "status" => 1
+                ]);
+
+                $payment->order()->update([
+                    "status" => "paid"
+                ]);
+
+//                alert()->success()
+//                return redirect()
+
+            } else {
+//                alert()->error()
+//                return redirect()
+            }
+        } catch (PayPingException $e) {
+            foreach (json_decode($e->getMessage(), true) as $msg) {
+                echo $msg;
+            }
+        }
     }
 }
