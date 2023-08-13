@@ -39,6 +39,10 @@ return [
 
     "ghasedak" => [
         'key' => env("GHASEDAK_API_KEY")
-    ]
+    ],
+
+    'payping' => [
+        'token' => env('PAYPING_TOKEN')
+    ],
 
 ];

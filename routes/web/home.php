@@ -48,6 +48,7 @@ Route::middleware(["auth", "verified"])->group(function () {
     });
     Route::post("comments", [HomeController::class, "comment"])->name("send.comment");
     Route::post("payment", [PaymentController::class, "payment"])->name("cart.payment");
+    Route::post("payment/callback", [PaymentController::class, "callback"])->name("payment.callback");
 });
 
 

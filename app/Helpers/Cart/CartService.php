@@ -36,8 +36,8 @@ class CartService
         }
 
         $this->cart->put($value["id"], $value);
-        session()->put($this->name, $this->cart);
-//        Cookie::queue($this->name , $this->cart->toJson() , 60 * 24 * 7 );
+        $this->storeSession();
+//        $this->storeCookie();
 
         return $this;
     }
@@ -121,12 +121,24 @@ class CartService
                 return $key != $item["id"];
             });
 
-            session()->put($this->name, $this->cart);
-//            Cookie::queue($this->name , $this->cart->toJson() , 60 * 24 * 7 );
+            $this->storeSession();
+//            $this->storeCookie();;
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @return $this
+     */
+    public function flush()
+    {
+        $this->cart = collect([]);
+        $this->storeSession();
+//        $this->storeCookie();
+
+        return $this;
     }
 
     /**
@@ -171,5 +183,21 @@ class CartService
         $this->cart = session()->get($name) ?? collect([]);
         $this->name = $name;
         return $this;
+    }
+
+    /**
+     * @return void
+     */
+    protected function storeCookie(): void
+    {
+        Cookie::queue($this->name, $this->cart->toJson(), 60 * 24 * 7);
+    }
+
+    /**
+     * @return void
+     */
+    protected function storeSession(): void
+    {
+        session()->put($this->name, $this->cart);
     }
 }

@@ -14,6 +14,7 @@ use Ramsey\Collection\Collection;
  * @method static Cart update($key, $options);
  * @method static int count($key);
  * @method static Cart instance(string $name);
+ * @method static Cart flush();
  */
 class Cart extends Facade
 {
