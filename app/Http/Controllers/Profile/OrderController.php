@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Helpers\Cart\Cart;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -18,5 +19,24 @@ class OrderController extends Controller
     {
         $this->authorize("view", $order);
         return view("profile.orders-detail", compact("order"));
+    }
+
+    public function payment(Order $order)
+    {
+        $this->authorize("view", $order);
+
+//        ToDo add payment
+
+//            test
+
+        $order->update([
+            "status" => "paid"
+        ]);
+
+//            end-test
+
+
+//        ToDo send error message
+        return back();
     }
 }

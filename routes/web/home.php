@@ -49,6 +49,7 @@ Route::middleware(["auth", "verified"])->group(function () {
 
         Route::get("orders", [OrderController::class, "index"])->name("profile.orders");
         Route::get("orders/{order}", [OrderController::class, "showDetails"])->name("profile.orders.detail");
+        Route::get("orders/{order}/payment", [OrderController::class, "payment"])->name("profile.orders.payment");
     });
     Route::post("comments", [HomeController::class, "comment"])->name("send.comment");
     Route::post("payment", [PaymentController::class, "payment"])->name("cart.payment");

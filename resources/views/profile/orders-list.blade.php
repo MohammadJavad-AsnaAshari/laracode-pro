@@ -18,6 +18,9 @@
                 <td>{{$order->tracking_serial ?? "هنوز ثبت نشده"}}</td>
                 <td>
                     <a href="{{route('profile.orders.detail', $order->id)}}" class="btn btn-sm btn-info">جزئیات سفارش</a>
+                    @if($order->status == "unpaid")
+                        <a href="{{route('profile.orders.payment', $order->id)}}" class="btn btn-sm btn-warning">پرداخت سفارش</a>
+                    @endif
                 </td>
             </tr>
         @endforeach
