@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Profile\IndexController;
+use App\Http\Controllers\Profile\OrderController;
 use App\Http\Controllers\Profile\TokenAuthController;
 use App\Http\Controllers\Profile\TwoFactorAuthController;
 use Illuminate\Support\Facades\Gate;
@@ -45,6 +46,9 @@ Route::middleware(["auth", "verified"])->group(function () {
 
         Route::get("/twofactorauth/phone", [TokenAuthController::class, "getPhoneVerify"])->name("profile.2fa.phone");
         Route::post("/twofactorauth/phone", [TokenAuthController::class, "postPhoneVerify"]);
+
+        Route::get("orders", [OrderController::class, "index"])->name("profile.orders");
+        Route::get("orders/{order}", [OrderController::class, "showDetails"])->name("profile.orders.detail");
     });
     Route::post("comments", [HomeController::class, "comment"])->name("send.comment");
     Route::post("payment", [PaymentController::class, "payment"])->name("cart.payment");

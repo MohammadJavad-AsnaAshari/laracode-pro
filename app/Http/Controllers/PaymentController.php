@@ -59,6 +59,15 @@ class PaymentController extends Controller
 
                 return redirect($payment->getPayUrl());
             }
+
+//            test
+
+            $order->update([
+                "status" => "paid"
+            ]);
+
+//            end-test
+
             $cart->flush();
         }
 
