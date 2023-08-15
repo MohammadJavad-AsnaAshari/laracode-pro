@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -100,12 +101,28 @@ class ProductController extends Controller
             "attributes" => ["array"],
         ]);
 
+        if ($request->file("image")) {
+            $request->validate([
+                "image" => ["required", "mimes:png,jpg,jpeg", "max:2048"]
+            ]);
+
+            if (File::exists(public_path($product->image)))
+                File::delete(public_path($product->image));
+
+            $file = $request->file("image");
+            $destinationPath = "/image/" . now()->year . "/" . now()->month . "/" . now()->day . "/";
+            $file->move(public_path($destinationPath), $file->getClientOriginalName());
+
+            $data["image"] = $destinationPath . $file->getClientOriginalName();
+        }
+
         $product->update($data); // Update the specific product instance
         $product->categories()->sync($data["categories"]);
 
         $product->attributes()->detach();
 
-        $this->attachAttributesToProducts($product, $data);
+        if (isset($data["attributes"]))
+            $this->attachAttributesToProducts($product, $data);
 
         Alert::success('Product Successfully Edit :)', 'Success Message');
         return redirect(route("admin.products.index"));

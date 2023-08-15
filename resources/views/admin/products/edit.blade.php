@@ -110,7 +110,7 @@
                 <div id="attributes"
                      data-attributes="{{ json_encode(\App\Models\Attribute::all()->pluck('name')) }}"></div>
                 <form class="form-horizontal" action="{{ route('admin.products.update' , $product->id) }}"
-                      method="POST">
+                      method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('patch')
 
@@ -134,6 +134,13 @@
                             <label for="inputPassword3" class="col-sm-2 control-label">موجودی</label>
                             <input type="number" name="inventory" class="form-control" id="inputPassword3"
                                    placeholder="موجودی را وارد کنید" value="{{ old('inventory',$product->inventory) }}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control mb-2" dir="ltr" value="{{$product->image}}" disabled>
+                            <img class="w-25" src="{{$product->image}}" alt="">
+                            <hr>
+                            <label class="col-sm-2 control-label">آپلود تصویر شاخص</label>
+                            <input type="file" name="image" class="form-control" id="inputPassword3">
                         </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">دسته بندی ها</label>
