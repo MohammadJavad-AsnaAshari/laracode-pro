@@ -58,16 +58,21 @@ class ProductController extends Controller
             'price' => ['required', 'string'],
             'categories' => ["required"],
             "attributes" => ["array"],
+            "image" => ["required", "mimes:png,jpg,jpeg", "max:2048"]
         ]);
 
         $file = $request->file("image");
-        $file->move(public_path("image"), $file->getClientOriginalName());
-        dd("done");
+        $destinationPath = "/image/" . now()->year . "/" . now()->month . "/" . now()->day . "/";
+        $file->move(public_path($destinationPath), $file->getClientOriginalName());
+
+        $data["image"] = $destinationPath . $file->getClientOriginalName();
 
         $product = auth()->user()->products()->create($data);
         $product->categories()->sync($data["categories"]);
 
-        $this->attachAttributesToProducts($product, $data);
+        if (isset($data["attributes"])) {
+            $this->attachAttributesToProducts($product, $data);
+        }
 
         Alert::success('Product Successfully Create :)', 'Success Message');
         return redirect(route("admin.products.index"));
