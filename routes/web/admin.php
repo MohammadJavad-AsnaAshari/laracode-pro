@@ -33,3 +33,4 @@ Route::resource("categories", CategoryController::class);
 Route::post("attribute/values", [AttributeController::class, "getValues"]);
 
 Route::resource("orders", OrderController::class);
+Route::get("orders/{order}/orders", [OrderController::class, "payments"])->name("orders.payments");

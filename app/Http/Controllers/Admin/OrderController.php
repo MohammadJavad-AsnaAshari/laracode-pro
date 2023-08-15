@@ -68,4 +68,10 @@ class OrderController extends Controller
         Alert::success('Order Successfully Delete !', 'Warning Message');
         return back();
     }
+
+    public function payments(Order $order)
+    {
+        $payments =  $order->payments()->latest()->paginate(10);
+        return view("admin.orders.payments", compact(["payments", "order"]));
+    }
 }
