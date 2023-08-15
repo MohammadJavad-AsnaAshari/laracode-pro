@@ -46,7 +46,7 @@
                                 <td>{{ $order->tracking_serial ?? 'هنوز ثبت نشده' }}</td>
                                 <td>{{ jdate($order->created_at)->ago() }}</td>
                                 <td class="d-flex">
-{{--                                    <a href="{{ route('admin.orders.show' , $order->id) }}" class="btn btn-sm btn-warning  ml-1">مشاهده جزئیات سفارش</a>--}}
+                                    <a href="{{ route('admin.orders.show' , $order->id) }}" class="btn btn-sm btn-warning  ml-1">مشاهده جزئیات سفارش</a>
                                     <a href="{{ route('admin.orders.payments' , $order->id) }}" class="btn btn-sm btn-info  ml-1">مشاهده پرداخت ها</a>
                                     <a href="{{ route('admin.orders.edit' , $order->id) }}" class="btn btn-sm btn-primary  ml-1">ویرایش سفارش</a>
                                     <form action="{{ route('admin.orders.destroy' , $order->id) }}" method="POST">

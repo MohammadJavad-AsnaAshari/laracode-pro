@@ -29,9 +29,10 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Order $order)
     {
-        //
+        $products = $order->products()->paginate(10);
+        return view("admin.orders.details", compact(["products", "order"]));
     }
 
     /**
@@ -71,7 +72,7 @@ class OrderController extends Controller
 
     public function payments(Order $order)
     {
-        $payments =  $order->payments()->latest()->paginate(10);
+        $payments = $order->payments()->latest()->paginate(10);
         return view("admin.orders.payments", compact(["payments", "order"]));
     }
 }
