@@ -6,11 +6,18 @@
     @endslot
 
     @slot('script')
-        <script src="/js/ckeditor-4/ckeditor.js"></script>
+        {{--        <script src="/js/ckeditor-4/ckeditor.js"></script>--}}
+        <script src="/js/ckeditor5-39.0.1-yjf4l01o2hvl/build/ckeditor.js"></script>
 
         <script>
-            CKEDITOR.replace('description');
-            document.addEventListener("DOMContentLoaded", function() {
+            // CKEDITOR.replace('description');
+            ClassicEditor
+                .create(document.querySelector('#description'))
+                .catch(error => {
+                    console.error(error);
+                });
+
+            document.addEventListener("DOMContentLoaded", function () {
 
                 document.getElementById('button-image').addEventListener('click', (event) => {
                     event.preventDefault();
@@ -155,7 +162,8 @@
                             <div class="input-group">
                                 <input type="text" id="image_label" class="form-control" name="image">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="button-image">انتخاب</button>
+                                    <button class="btn btn-outline-secondary" type="button" id="button-image">انتخاب
+                                    </button>
                                 </div>
                             </div>
                         </div>
