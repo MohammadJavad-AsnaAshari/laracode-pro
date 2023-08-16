@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductGallery;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductGalleryController extends Controller
 {
@@ -28,9 +30,19 @@ class ProductGalleryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
-        //
+        $data = $request->validate([
+            "images.*.image" => "required",
+            "images.*.alt" => "required|min:3"
+        ]);
+
+        collect($data["images"])->each(function ($image) use ($product) {
+            $product->galleries()->create($image);
+        });
+
+        Alert::success('Product Gallery Successfully Create :)', 'Success Message');
+        return redirect(route("admin.products.gallery.index", ['product' => $product->id]));
     }
 
     /**
@@ -60,8 +72,10 @@ class ProductGalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product, ProductGallery $gallery)
     {
-        //
+        $gallery->delete();
+        Alert::success('Product Gallery Successfully Delete :)', 'Success Message');
+        return back();
     }
 }
