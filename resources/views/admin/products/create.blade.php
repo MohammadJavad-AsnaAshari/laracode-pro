@@ -6,26 +6,27 @@
     @endslot
 
     @slot('script')
-        {{--        <script src="/js/ckeditor-4/ckeditor.js"></script>--}}
+        <script src="/js/ckeditor-4/ckeditor.js"></script>
         {{--        <script src="/js/ckeditor5-39.0.1-yjf4l01o2hvl/build/ckeditor.js"></script>--}}
 
-        <script src="https://cdn.tiny.cloud/1/my3if4cg6dq61ex3tz6bpb1jkkvmv2pr0kizpzeikug0wse7/tinymce/6/tinymce.min.js"
-                referrerpolicy="#description"></script>
+        {{--        <script src="https://cdn.tiny.cloud/1/my3if4cg6dq61ex3tz6bpb1jkkvmv2pr0kizpzeikug0wse7/tinymce/6/tinymce.min.js"--}}
+        {{--                referrerpolicy="#description"></script>--}}
 
-        <script>
-            tinymce.init({
-                selector: 'textarea'
-            });</script>
+        {{--        <script>--}}
+        {{--            tinymce.init({--}}
+        {{--                selector: 'textarea'--}}
+        {{--            });--}}
+        {{--        </script>--}}
 
         <script>
             // CKEDITOR.replace('description');
-            // CKEDITOR.replace('description', {filebrowserImageBrowseUrl: '/file-manager/ckeditor'});
+            CKEDITOR.replace('description', {filebrowserImageBrowseUrl: '/file-manager/ckeditor'});
 
-            ClassicEditor
-                .create(document.querySelector('#description'))
-                .catch(error => {
-                    console.error(error);
-                });
+            // ClassicEditor
+            //     .create(document.querySelector('#description'))
+            //     .catch(error => {
+            //         console.error(error);
+            //     });
 
             document.addEventListener("DOMContentLoaded", function () {
 
