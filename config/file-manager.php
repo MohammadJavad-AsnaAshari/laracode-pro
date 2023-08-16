@@ -110,7 +110,7 @@ return [
      *
      * default - false(OFF)
      */
-    'acl' => false,
+    'acl' => true,
 
     /**
      * Hide files and folders from file-manager if user doesn't have access

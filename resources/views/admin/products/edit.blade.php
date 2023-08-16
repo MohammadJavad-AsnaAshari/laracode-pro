@@ -7,6 +7,20 @@
 
     @slot('script')
         <script>
+            document.addEventListener("DOMContentLoaded", function() {
+
+                document.getElementById('button-image').addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
+                });
+            });
+
+            // set file link
+            function fmSetLink($url) {
+                document.getElementById('image_label').value = $url;
+            }
+
             $('#categories').select2({
                 'placeholder': 'دسته بندی مورد نظر را انتخاب کنید'
             })
@@ -136,11 +150,16 @@
                                    placeholder="موجودی را وارد کنید" value="{{ old('inventory',$product->inventory) }}">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control mb-2" dir="ltr" value="{{$product->image}}" disabled>
-                            <img class="w-25" src="{{$product->image}}" alt="">
                             <hr>
                             <label class="col-sm-2 control-label">آپلود تصویر شاخص</label>
-                            <input type="file" name="image" class="form-control" id="inputPassword3">
+                            <div class="input-group mb-2">
+                                <input type="text" id="image_label" class="form-control" name="image"
+                                aria-label="Image" aria-describedby="button-image" dir="ltr" value="{{$product->image}}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" id="button-image">Select</button>
+                                </div>
+                            </div>
+                            <img class="w-25" src="{{$product->image}}" alt="">
                         </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">دسته بندی ها</label>

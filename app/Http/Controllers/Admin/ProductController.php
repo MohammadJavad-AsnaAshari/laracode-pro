@@ -59,14 +59,8 @@ class ProductController extends Controller
             'price' => ['required', 'string'],
             'categories' => ["required"],
             "attributes" => ["array"],
-            "image" => ["required", "mimes:png,jpg,jpeg", "max:2048"]
+            "image" => ["required"]
         ]);
-
-        $file = $request->file("image");
-        $destinationPath = "/image/" . now()->year . "/" . now()->month . "/" . now()->day . "/";
-        $file->move(public_path($destinationPath), $file->getClientOriginalName());
-
-        $data["image"] = $destinationPath . $file->getClientOriginalName();
 
         $product = auth()->user()->products()->create($data);
         $product->categories()->sync($data["categories"]);
@@ -99,22 +93,8 @@ class ProductController extends Controller
             'price' => ['required', 'string'],
             'categories' => ["required"],
             "attributes" => ["array"],
+            "image" => ["required"]
         ]);
-
-        if ($request->file("image")) {
-            $request->validate([
-                "image" => ["required", "mimes:png,jpg,jpeg", "max:2048"]
-            ]);
-
-            if (File::exists(public_path($product->image)))
-                File::delete(public_path($product->image));
-
-            $file = $request->file("image");
-            $destinationPath = "/image/" . now()->year . "/" . now()->month . "/" . now()->day . "/";
-            $file->move(public_path($destinationPath), $file->getClientOriginalName());
-
-            $data["image"] = $destinationPath . $file->getClientOriginalName();
-        }
 
         $product->update($data); // Update the specific product instance
         $product->categories()->sync($data["categories"]);
