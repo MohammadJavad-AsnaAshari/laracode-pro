@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductGalleryController extends Controller
@@ -10,9 +11,10 @@ class ProductGalleryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Product $product)
     {
-        //
+        $images = $product->galleries()->latest()->paginate(10);
+        return view("admin.products.gallery.all", compact(["product", "images"]));
     }
 
     /**

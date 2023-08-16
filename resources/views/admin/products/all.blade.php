@@ -56,6 +56,10 @@
                                            class="btn btn-primary btn-sm">ویرایش
                                         </a>
                                     @endcan
+                                    @can("gallery")
+                                        <a href="{{ route('admin.products.gallery.index' , ['product' => $product->id ]) }}"
+                                           class="btn btn-sm btn-warning ml-1 mr-2">گالری تصاویر</a>
+                                    @endcan
                                     @can("delete-product")
                                         <form action="{{route("admin.products.destroy", ["product" => $product->id])}}"
                                               method="post">
