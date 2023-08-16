@@ -20,9 +20,9 @@ class ProductGalleryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Product $product)
     {
-        //
+        return view("admin.products.gallery.create", compact("product"));
     }
 
     /**
