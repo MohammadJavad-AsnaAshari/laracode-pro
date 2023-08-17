@@ -26,6 +26,8 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $this->seo()->setTitle("همه محصولات");
+
         $products = Product::query();
 
         if ($keyword = \request("search")) {
@@ -45,6 +47,9 @@ class ProductController extends Controller
      */
     public function create()
     {
+//        $this->seo()->setTitle("ایجاد محصول");
+        \SEO::setTitle("ایجاد محصول");
+
         return view("admin.products.create");
     }
 
