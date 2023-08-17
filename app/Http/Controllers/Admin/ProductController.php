@@ -7,6 +7,7 @@ use App\Models\Attribute;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -95,6 +96,8 @@ class ProductController extends Controller
             "attributes" => ["array"],
             "image" => ["required"]
         ]);
+
+//        Storage::disk("public")->putFileAs("files", $request->file("file"), $request->file("file")->getClientOriginalName());
 
         $product->update($data); // Update the specific product instance
         $product->categories()->sync($data["categories"]);

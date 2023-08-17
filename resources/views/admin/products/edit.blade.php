@@ -159,6 +159,7 @@
                                     <button class="btn btn-outline-secondary" type="button" id="button-image">Select</button>
                                 </div>
                             </div>
+{{--                            <input type="file" name="file" class="form-control">--}}
                             <img class="w-25" src="{{$product->image}}" alt="">
                         </div>
                         <div class="form-group">
