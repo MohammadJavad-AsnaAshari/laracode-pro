@@ -14,7 +14,7 @@
                             <div class="form-group">
                                  <label>تصویر</label>
                                  <div class="input-group">
-                                    <input type="text" class="form-control image_label" name="images[${id}][url]"
+                                    <input type="text" class="form-control image_label" name="images[${id}][image]"
                                            aria-label="Image" aria-describedby="button-image">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary button-image" type="button">انتخاب</button>

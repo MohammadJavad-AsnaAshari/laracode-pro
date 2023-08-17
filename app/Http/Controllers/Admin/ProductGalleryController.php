@@ -56,17 +56,24 @@ class ProductGalleryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product, ProductGallery $gallery)
     {
-        //
+        return view("admin.products.gallery.edit", compact("product", "gallery"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product, ProductGallery $gallery)
     {
-        //
+        $data = $request->validate([
+            "image" => "required",
+            "alt" => "required|min:3"
+        ]);
+
+        $gallery->update($data);
+        Alert::success('Product Gallery Successfully Update :)', 'Success Message');
+        return redirect(route("admin.products.gallery.index", ['product' => $product->id]));
     }
 
     /**
