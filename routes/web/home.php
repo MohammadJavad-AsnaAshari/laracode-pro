@@ -79,3 +79,5 @@ Route::get("download/test", function () {
 //    return route("download.file", ["user" => auth()->user()->id, "path" => "files/screenshot.png"]);
     return \Illuminate\Support\Facades\URL::temporarySignedRoute("download.file", now()->addMinutes(30), ["user" => auth()->user()->id, "path" => "files/screenshot.png"]);
 });
+
+Route::get("/seo", [\App\Http\Controllers\IndexController::class, "index"]);
