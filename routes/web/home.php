@@ -71,6 +71,11 @@ Route::post("cart/add/{product}", [CartController::class, "addToCart"])->name("c
 Route::patch("cart/quantity/change", [CartController::class, "quantityChange"]);
 Route::delete("card/delete/{cart}", [CartController::class, "deleteFromCart"])->name("cart.destroy");
 
-Route::get("download/{file}", function ($file) {
-   return Storage::download("files/" . $file);
+Route::get("download/{user}/file", function () {
+    return Storage::download(request("path"));
+})->name("download.file")->middleware("signed");
+
+Route::get("download/test", function () {
+//    return route("download.file", ["user" => auth()->user()->id, "path" => "files/screenshot.png"]);
+    return \Illuminate\Support\Facades\URL::temporarySignedRoute("download.file", now()->addMinutes(30), ["user" => auth()->user()->id, "path" => "files/screenshot.png"]);
 });
