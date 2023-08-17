@@ -12,6 +12,7 @@ use App\Http\Controllers\Profile\TokenAuthController;
 use App\Http\Controllers\Profile\TwoFactorAuthController;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,3 +70,7 @@ Route::get("cart", [CartController::class, "cart"]);
 Route::post("cart/add/{product}", [CartController::class, "addToCart"])->name("cart.add");
 Route::patch("cart/quantity/change", [CartController::class, "quantityChange"]);
 Route::delete("card/delete/{cart}", [CartController::class, "deleteFromCart"])->name("cart.destroy");
+
+Route::get("download/{file}", function ($file) {
+   return Storage::download("files/" . $file);
+});
