@@ -4,16 +4,16 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Module Product</title>
+        <title>Module Discount</title>
 
        {{-- Laravel Vite - CSS File --}}
-       {{-- {{ module_vite('build-product', 'Resources/assets/sass/app.scss') }} --}}
+       {{-- {{ module_vite('build-discount', 'Resources/assets/sass/app.scss') }} --}}
 
     </head>
     <body>
         @yield('content')
 
         {{-- Laravel Vite - JS File --}}
-        {{-- {{ module_vite('build-product', 'Resources/assets/js/app.js') }} --}}
+        {{-- {{ module_vite('build-discount', 'Resources/assets/js/app.js') }} --}}
     </body>
 </html>

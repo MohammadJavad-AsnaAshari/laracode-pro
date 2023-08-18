@@ -11,6 +11,8 @@
 |
 */
 
-Route::prefix('product')->group(function() {
-    Route::get('/', 'ProductController@index');
+use Modules\Discount\Http\Controllers\DiscountController;
+
+Route::prefix('discount')->group(function () {
+    Route::get('/', [DiscountController::class, "index"]);
 });

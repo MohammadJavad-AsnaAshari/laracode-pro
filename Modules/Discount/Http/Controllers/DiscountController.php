@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Product\Http\Controllers;
+namespace Modules\Discount\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class ProductController extends Controller
+class DiscountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('product::index');
+        return view('discount::index');
     }
 
     /**
@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product::create');
+        return view('discount::create');
     }
 
     /**
@@ -43,7 +43,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return view('product::show');
+        return view('discount::show');
     }
 
     /**
@@ -53,7 +53,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return view('product::edit');
+        return view('discount::edit');
     }
 
     /**
