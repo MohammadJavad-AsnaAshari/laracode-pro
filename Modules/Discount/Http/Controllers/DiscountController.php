@@ -5,6 +5,7 @@ namespace Modules\Discount\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Validation\Rule;
 use Modules\Discount\Entities\Discount;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -36,7 +37,6 @@ class DiscountController extends Controller
      */
     public function store(Request $request)
     {
-
         $data = $request->validate([
             'code' => 'required|unique:discounts,code',
             'percent' => 'required|integer|between:1,99',
@@ -66,9 +66,9 @@ class DiscountController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function edit($id)
+    public function edit(Discount $discount)
     {
-        return view('discount::edit');
+        return view('discount::admin.edit', compact("discount"));
     }
 
     /**
@@ -77,9 +77,34 @@ class DiscountController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Discount $discount)
     {
-        //
+        $data = $request->validate([
+            'code' => ["required", Rule::unique("discounts", "code")->ignore($discount->id)],
+            'percent' => 'required|integer|between:1,99',
+            'users' => 'nullable|array|exists:users,id',
+            'products' => 'nullable|array|exists:products,id',
+            'categories' => 'nullable|array|exists:categories,id',
+            'expired_at' => 'required'
+        ]);
+
+        $discount->update($data);
+
+        isset($data["users"])
+            ? $discount->users()->sync($data['users'])
+            : $discount->users()->detach();
+
+        isset($data["products"])
+            ? $discount->products()->sync($data['products'])
+            : $discount->products()->detach();
+
+        isset($data["categories"])
+            ? $discount->categories()->sync($data['categories'])
+            : $discount->categories()->detach();
+
+
+        Alert::success('Discount Successfully Update :)', 'Success Message');
+        return redirect(route("admin.discount.index"));
     }
 
     /**
