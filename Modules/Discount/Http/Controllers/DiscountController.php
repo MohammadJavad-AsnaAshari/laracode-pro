@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Discount\Entities\Discount;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DiscountController extends Controller
 {
@@ -25,7 +26,7 @@ class DiscountController extends Controller
      */
     public function create()
     {
-        return view('discount::create');
+        return view('discount::admin.create');
     }
 
     /**
@@ -35,17 +36,29 @@ class DiscountController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('discount::show');
+        $data = $request->validate([
+            'code' => 'required|unique:discounts,code',
+            'percent' => 'required|integer|between:1,99',
+            'users' => 'nullable|array|exists:users,id',
+            'products' => 'nullable|array|exists:products,id',
+            'categories' => 'nullable|array|exists:categories,id',
+            'expired_at' => 'required'
+        ]);
+
+        $discount = Discount::create($data);
+
+        if (isset($data["users"]))
+            $discount->users()->attach($data['users']);
+
+        if (isset($data["products"]))
+            $discount->products()->attach($data["products"]);
+
+        if (isset($data["categories"]))
+            $discount->categories()->attach($data["categories"]);
+
+        Alert::success('Discount Successfully Create :)', 'Success Message');
+        return redirect(route("admin.discount.index"));
     }
 
     /**
@@ -74,8 +87,11 @@ class DiscountController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
+    public function destroy(Discount $discount)
     {
-        //
+        $discount->delete();
+
+        Alert::success('Discount Successfully Delete !', 'Warning Message');
+        return back();
     }
 }
