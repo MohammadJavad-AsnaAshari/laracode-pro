@@ -16,7 +16,6 @@ return new class extends Migration {
             $table->id();
             $table->string("code");
             $table->integer("percent");
-            $table->string("user")->nullable();
 
             $table->timestamp("expired_at");
             $table->timestamps();
@@ -33,7 +32,14 @@ return new class extends Migration {
             $table->foreignId("category_id")->references("id")->on("categories")->onDelete("cascade");
             $table->foreignId("discount_id")->references("id")->on("discounts")->onDelete("cascade");
 
-            $table->primary(["discount_id", "category_id"]);
+            $table->primary(["category_id", "discount_id"]);
+        });
+
+        Schema::create("discount_user", function (Blueprint $table) {
+            $table->foreignId("discount_id")->references("id")->on("discounts")->onDelete("cascade");
+            $table->foreignId("user_id")->references("id")->on("users")->onDelete("cascade");
+
+            $table->primary(["discount_id", "user_id"]);
         });
     }
 
@@ -44,6 +50,7 @@ return new class extends Migration {
      */
     public function down()
     {
+        Schema::dropIfExists('discount_user');
         Schema::dropIfExists('discount_product');
         Schema::dropIfExists('category_discount');
         Schema::dropIfExists('discounts');

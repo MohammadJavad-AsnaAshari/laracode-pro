@@ -4,6 +4,7 @@ namespace Modules\Discount\Entities;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -12,7 +13,7 @@ class Discount extends Model
     use HasFactory;
 
     protected $fillable = [
-        "code", "percent", "user", "expired_at"
+        "code", "percent", "expired_at"
     ];
 
     protected static function newFactory()
@@ -28,5 +29,10 @@ class Discount extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }
