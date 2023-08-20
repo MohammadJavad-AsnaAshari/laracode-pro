@@ -8,11 +8,16 @@ use Illuminate\Support\Str;
 class CartService
 {
     protected $cart;
-    protected $name = "default";
+    protected $name = "cart";
 
     public function __construct()
     {
-        $this->cart = session()->get($this->name) ?? collect([]);
+        $cart = session()->get($this->name) ?? collect([]);
+        $this->cart = $cart->count() ? $cart : collect([
+            "items" => [],
+            "discount" => null
+        ]);
+
 //        $this->cart = collect(json_decode(request()->cookie($this->name) , true)) ?? collect([]);
     }
 
@@ -27,7 +32,8 @@ class CartService
             $value = array_merge($value, [
                 "id" => Str::random(10),
                 "subject_id" => $obj->id,
-                "subject_type" => get_class($obj)
+                "subject_type" => get_class($obj),
+                "discount_percent" => 0
             ]);
         } elseif (!isset($value["id"])) {
             $value = array_merge($value, [
@@ -35,7 +41,7 @@ class CartService
             ]);
         }
 
-        $this->cart->put($value["id"], $value);
+        $this->cart["items"] = collect($this->cart["items"])->put($value["id"], $value);
         $this->storeSession();
 //        $this->storeCookie();
 
@@ -50,11 +56,11 @@ class CartService
     {
         if ($key instanceof Model) {
             return !is_null(
-                $this->cart->where("subject_id", $key->id)->where("subject_type", get_class($key))->first()
+                collect($this->cart["items"])->where("subject_id", $key->id)->where("subject_type", get_class($key))->first()
             );
         }
         return !is_null(
-            $this->cart->firstWhere("id", $key)
+            collect($this->cart["items"])->firstWhere("id", $key)
         );
     }
 
@@ -88,8 +94,8 @@ class CartService
     public function get($key, $withRelationShip = true)
     {
         $item = $key instanceof Model
-            ? $this->cart->where("subject_id", $key->id)->where("subject_type", get_class($key))->first()
-            : $this->cart->firstWhere("id", $key);
+            ? collect($this->cart["items"])->where("subject_id", $key->id)->where("subject_type", get_class($key))->first()
+            : collect($this->cart["items"])->firstWhere("id", $key);
 
         return $withRelationShip ? $this->withRelationshipIfExist($item) : $item;
     }
@@ -99,8 +105,8 @@ class CartService
      */
     public function all()
     {
-        $cart = $this->cart;
-        $cart = $cart->map(function ($item) {
+//        $cart = $this->cart;
+        $cart = collect($this->cart["items"])->map(function ($item) {
             return $this->withRelationshipIfExist($item);
         });
 
@@ -114,7 +120,7 @@ class CartService
     public function delete($key)
     {
         if ($this->has($key)) {
-            $this->cart = $this->cart->filter(function ($item) use ($key) {
+            $this->cart["items"] = collect($this->cart["items"])->filter(function ($item) use ($key) {
                 if ($key instanceof Model) {
                     return ($item["subject_id"] != $key->id && $item["subject_type"] != get_class($key));
                 }
@@ -134,7 +140,10 @@ class CartService
      */
     public function flush()
     {
-        $this->cart = collect([]);
+        $this->cart = collect([
+            "items" => [],
+            "discount" => null
+        ]);
         $this->storeSession();
 //        $this->storeCookie();
 
@@ -180,7 +189,11 @@ class CartService
      */
     public function instance(string $name)
     {
-        $this->cart = session()->get($name) ?? collect([]);
+        $cart = session()->get($this->name) ?? collect([]);
+        $this->cart = $cart->count() ? $cart : collect([
+            "items" => [],
+            "discount" => null
+        ]);
         $this->name = $name;
         return $this;
     }
