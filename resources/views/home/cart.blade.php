@@ -19,7 +19,7 @@
                 data: JSON.stringify({
                     id: id,
                     quantity: event.target.value,
-                    cart : cartName,
+                    cart: cartName,
                     _method: 'patch'
                 }),
                 success: function (res) {
@@ -68,8 +68,8 @@
                                                 @if($product->attributes)
                                                     @foreach($product->attributes->take(3) as $attribute)
                                                         <small>
-                                                            <span
-                                                                class="text-muted">{{$attribute->name}}: </span> {{$attribute->pivot->value->value}}
+                                                            <span class="text-muted">{{$attribute->name}}: </span>
+                                                            {{$attribute->pivot->value->value}}
                                                         </small>
                                                     @endforeach
                                                 @endif
@@ -85,7 +85,7 @@
                                                 class="form-control text-center">
                                             @foreach(range(1,$product->inventory) as $item)
                                                 <option
-                                                    value="{{$item}}" {{$cart['quantity'] == $item ? 'selected' : ''}}>{{$item}}
+                                                    value="{{$item}}" {{$cart['quantity']==$item ? 'selected' : '' }}>{{$item}}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -94,13 +94,13 @@
                                         تومان {{$cart["product"]->price * $cart["quantity"]}}</td>
                                     <td class="text-center align-middle px-0">
                                         <form action="{{route("cart.destroy", $cart["id"])}}"
-                                              id="delete-cart-{{$product->id}}" method="post">
+                                              id="delete-cart-{{$product->id}}"
+                                              method="post">
                                             @csrf
                                             @method("delete")
                                             <a href="#"
                                                onclick="event.preventDefault();document.getElementById('delete-cart-{{$product->id}}').submit()"
-                                               class="shop-tooltip close float-none text-danger"
-                                            >
+                                               class="shop-tooltip close float-none text-danger">
                                                 ×
                                             </a>
                                         </form>
@@ -113,20 +113,34 @@
                 </div>
                 <!-- / Shopping cart table -->
                 <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
-                    <div class="mt-4"></div>
                     <div class="d-flex">
-                        {{--                        <div class="text-right mt-4 mr-5">--}}
-                        {{--                            <label class="text-muted font-weight-normal m-0">Discount</label>--}}
-                        {{--                            <div class="text-large"><strong>$20</strong></div>--}}
-                        {{--                        </div>--}}
+                        {{-- <div class="text-right mt-4 mr-5">--}}
+                        {{-- <label class="text-muted font-weight-normal m-0">Discount</label>--}}
+                        {{-- <div class="text-large"><strong>$20</strong></div>--}}
+                        {{-- </div>--}}
                         <div class="text-right mt-4">
                             <label class="text-muted font-weight-normal m-0">قیمت کل</label>
                             @php
                                 $totalPrice = Cart::instance("cart")->all()->sum(function ($cart){
-                                    return $cart["product"]->price * $cart["quantity"];
+                                return $cart["product"]->price * $cart["quantity"];
                                 });
                             @endphp
                             <div class="text-large"><strong> {{$totalPrice}}تومان </strong></div>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="text-left mt-4">
+                            <form action="{{route('cart.discount.check')}}" method="post" class="mt-4">
+                                @csrf
+                                <input type="hidden" name="cart" value="cart">
+                                <input type="text" class="form-control" name="discount" placeholder="کد تخفیف دارید؟">
+                                <button type="submit" class="btn btn-success mt-2">اعمال تخفیف</button>
+                                @if($errors->has("discount"))
+                                    <div class="text-danger text-sm mt-2">
+                                        {{$errors->first("discount")}}
+                                    </div>
+                                @endif
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -135,7 +149,9 @@
                     <form action="{{route('cart.payment')}}" method="post" id="cart-payment">
                         @csrf
                     </form>
-                    <button onclick="document.getElementById('cart-payment').submit()" type="button" class="btn btn-lg btn-primary mt-2">پرداخت</button>
+                    <button onclick="document.getElementById('cart-payment').submit()" type="button"
+                            class="btn btn-lg btn-primary mt-2">پرداخت
+                    </button>
                 </div>
 
             </div>

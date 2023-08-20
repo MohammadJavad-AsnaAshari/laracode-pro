@@ -11,8 +11,8 @@
 |
 */
 
-use Modules\Discount\Http\Controllers\DiscountController;
+use Modules\Discount\Http\Controllers\Frontend\DiscountController;
 
 Route::prefix('discount')->group(function () {
-    Route::get('/', [DiscountController::class, "index"]);
+    Route::post('discount/check', [DiscountController::class, "check"])->name("cart.discount.check");
 });
