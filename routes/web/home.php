@@ -65,12 +65,6 @@ Route::get("/secret", function () {
 Route::get("products", [ProductController::class, "index"]);
 Route::get("products/{product}", [ProductController::class, "single"]);
 
-
-Route::get("cart", [CartController::class, "cart"]);
-Route::post("cart/add/{product}", [CartController::class, "addToCart"])->name("cart.add");
-Route::patch("cart/quantity/change", [CartController::class, "quantityChange"]);
-Route::delete("card/delete/{cart}", [CartController::class, "deleteFromCart"])->name("cart.destroy");
-
 Route::get("download/{user}/file", function () {
     return Storage::download(request("path"));
 })->name("download.file")->middleware("signed");

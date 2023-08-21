@@ -2,10 +2,10 @@
 
 namespace Modules\Discount\Http\Controllers\Frontend;
 
-use App\Helpers\Cart\Cart;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Cart\Helpers\Cart;
 use Modules\Discount\Entities\Discount;
 
 class DiscountController extends Controller

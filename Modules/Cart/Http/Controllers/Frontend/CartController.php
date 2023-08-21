@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Cart\Http\Controllers\Frontend;
 
-use App\Helpers\Cart\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Modules\Cart\Helpers\Cart;
 
 class CartController extends Controller
 {
@@ -28,7 +29,7 @@ class CartController extends Controller
 
     public function cart()
     {
-        return view("home.cart");
+        return view("cart::frontend.cart");
     }
 
     public function quantityChange(Request $request)

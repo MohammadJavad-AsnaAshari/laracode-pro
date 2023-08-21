@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Helpers\Cart;
+namespace Modules\Cart\Helpers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 use Modules\Discount\Entities\Discount;
 

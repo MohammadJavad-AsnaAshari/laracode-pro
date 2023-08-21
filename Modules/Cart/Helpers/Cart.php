@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Cart;
+namespace Modules\Cart\Helpers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;

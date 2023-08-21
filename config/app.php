@@ -169,7 +169,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        \App\Helpers\Cart\CartServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -186,7 +185,6 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-        "Cart" => \App\Helpers\Cart\Cart::class,
     ])->toArray(),
 
 ];
