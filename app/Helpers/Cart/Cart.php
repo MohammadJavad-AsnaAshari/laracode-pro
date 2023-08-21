@@ -15,6 +15,7 @@ use Ramsey\Collection\Collection;
  * @method static int count($key);
  * @method static Cart instance(string $name);
  * @method static Cart flush();
+ * @method static void addDiscount($discount);
  */
 class Cart extends Facade
 {

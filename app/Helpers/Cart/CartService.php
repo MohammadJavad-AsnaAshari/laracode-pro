@@ -4,6 +4,7 @@ namespace App\Helpers\Cart;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Modules\Discount\Entities\Discount;
 
 class CartService
 {
@@ -105,9 +106,11 @@ class CartService
      */
     public function all()
     {
-//        $cart = $this->cart;
-        $cart = collect($this->cart["items"])->map(function ($item) {
-            return $this->withRelationshipIfExist($item);
+        $cart = $this->cart;
+        $cart = collect($this->cart["items"])->map(function ($item) use ($cart) {
+            $item = $this->withRelationshipIfExist($item);
+            $item = $this->checkDiscountValidate($item, $cart["discount"]);
+            return $item;
         });
 
         return $cart;
@@ -212,5 +215,30 @@ class CartService
     protected function storeSession(): void
     {
         session()->put($this->name, $this->cart);
+    }
+
+    /**
+     * @param $discount
+     * @return void
+     */
+    public function addDiscount($discount)
+    {
+        $this->cart["discount"] = $discount;
+        $this->storeSession();
+    }
+
+    protected function checkDiscountValidate($item, $discount)
+    {
+        $discount = Discount::where("id", $discount)->first();
+        if ($discount && $discount->expired_at > now()) {
+            if (
+                (!$discount->products()->count() && !$discount->categories()->count()) ||
+                (in_array($item["product"]->id, $discount->products->pluck("id")->toArray()))
+            ) {
+                $item["discount_percent"] = $discount->percent / 100;
+            }
+        }
+
+        return $item;
     }
 }

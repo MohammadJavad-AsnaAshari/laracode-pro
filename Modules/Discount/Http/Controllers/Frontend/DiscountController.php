@@ -2,6 +2,7 @@
 
 namespace Modules\Discount\Http\Controllers\Frontend;
 
+use App\Helpers\Cart\Cart;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -31,13 +32,16 @@ class DiscountController extends Controller
         }
 
         if ($discount->users->count()) {
-            if (! in_array(auth()->user()->id, $discount->users->pluck("id")->toArray())) {
+            if (!in_array(auth()->user()->id, $discount->users->pluck("id")->toArray())) {
                 return back()->withErrors([
                     "discount" => "شما قادر به استفاده از این کد تخفیف نیستید."
                 ]);
             }
         }
 
-        return "ok";
+        $cart = Cart::instance($data["cart"]);
+        $cart->addDiscount($discount->id);
+
+        return back();
     }
 }
