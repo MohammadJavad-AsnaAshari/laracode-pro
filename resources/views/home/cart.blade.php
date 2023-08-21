@@ -156,8 +156,13 @@
                         <div class="text-left mt-4">
                             @if($discount = Cart::getDiscount())
                                 <div class="mt-4">
+                                    <form action="{{route("cart.discount.delete")}}" method="post" id="delete_discount">
+                                        @csrf
+                                        @method("delete")
+                                        <input type="hidden" name="cart", value="cart">
+                                    </form>
                                     <span>کد تخفیف فعال: <span class="text-success">{{$discount->code}}</span>
-                                        <a href="" class="badge bg-danger">حذف</a>
+                                        <a href="" onclick="event.preventDefault(); document.getElementById('delete_discount').submit()" class="badge bg-danger">حذف</a>
                                     </span>
                                 </div>
                                 <div>

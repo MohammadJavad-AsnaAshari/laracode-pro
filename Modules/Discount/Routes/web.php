@@ -11,8 +11,10 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
 use Modules\Discount\Http\Controllers\Frontend\DiscountController;
 
 Route::prefix('discount')->group(function () {
-    Route::post('discount/check', [DiscountController::class, "check"])->name("cart.discount.check");
+    Route::post('check', [DiscountController::class, "check"])->name("cart.discount.check");
+    Route::delete("delete", [DiscountController::class, "destroy"])->name("cart.discount.delete");
 });
