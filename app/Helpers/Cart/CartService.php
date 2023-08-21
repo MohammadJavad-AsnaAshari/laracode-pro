@@ -113,7 +113,6 @@ class CartService
             return $item;
         });
 
-        dd($cart);
         return $cart;
     }
 

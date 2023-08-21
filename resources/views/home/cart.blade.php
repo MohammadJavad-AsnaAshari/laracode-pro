@@ -77,9 +77,18 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-right font-weight-semibold align-middle p-4">{{$product->price}}
-                                        تومان
-                                    </td>
+
+                                    @if(! $cart["discount_percent"])
+                                        <td class="text-right font-weight-semibold align-middle p-4">{{$product->price}}
+                                            تومان
+                                        </td>
+                                    @else
+                                        <td class="text-right font-weight-semibold align-middle p-4">
+                                            <del class="text-danger text-sm">{{$product->price}}تومان</del>
+                                            <span>{{$product->price - ($product->price * $cart["discount_percent"])}}تومان</span>
+                                        </td>
+                                    @endif
+
                                     <td class="align-middle p-4">
                                         <select onchange="changeQuantity(event, '{{ $cart['id'] }}', 'cart')"
                                                 class="form-control text-center">
@@ -90,8 +99,21 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td class="text-right font-weight-semibold align-middle p-4">
-                                        تومان {{$cart["product"]->price * $cart["quantity"]}}</td>
+                                    @if(! $cart["discount_percent"])
+                                        <td class="text-right font-weight-semibold align-middle p-4">
+                                            تومان {{$cart["product"]->price * $cart["quantity"]}}
+                                        </td>
+                                    @else
+                                        <td class="text-right font-weight-semibold align-middle p-4">
+                                            <del class="text-danger text-sm">
+                                                {{$product->price * $cart["quantity"]}}تومان
+                                            </del>
+                                            <span>
+                                                {{($product->price * $cart["quantity"] - ($product->price * $cart["discount_percent"]) * $cart["quantity"])}}تومان
+                                            </span>
+                                        </td>
+                                    @endif
+
                                     <td class="text-center align-middle px-0">
                                         <form action="{{route("cart.destroy", $cart["id"])}}"
                                               id="delete-cart-{{$product->id}}"
@@ -122,7 +144,9 @@
                             <label class="text-muted font-weight-normal m-0">قیمت کل</label>
                             @php
                                 $totalPrice = Cart::instance("cart")->all()->sum(function ($cart){
-                                return $cart["product"]->price * $cart["quantity"];
+                                return $cart["discount_percent"] == 0
+                                ? $cart["product"]->price * $cart["quantity"]
+                                : $cart["product"]->price * $cart["quantity"] - ($cart["product"]->price * $cart["discount_percent"]) * $cart["quantity"];
                                 });
                             @endphp
                             <div class="text-large"><strong> {{$totalPrice}}تومان </strong></div>
