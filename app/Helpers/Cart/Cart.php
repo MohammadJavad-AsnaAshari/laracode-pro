@@ -4,6 +4,7 @@ namespace App\Helpers\Cart;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
+use Modules\Discount\Entities\Discount;
 use Ramsey\Collection\Collection;
 
 /**
@@ -16,6 +17,7 @@ use Ramsey\Collection\Collection;
  * @method static Cart instance(string $name);
  * @method static Cart flush();
  * @method static void addDiscount($discount);
+ * @method static Discount getDiscount();
  */
 class Cart extends Facade
 {

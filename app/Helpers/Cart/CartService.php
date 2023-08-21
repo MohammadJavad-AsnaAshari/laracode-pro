@@ -227,6 +227,14 @@ class CartService
         $this->storeSession();
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDiscount()
+    {
+        return Discount::whereId($this->cart["discount"])->first();
+    }
+
     protected function checkDiscountValidate($item, $discount)
     {
         $discount = Discount::where("id", $discount)->first();
