@@ -1,7 +1,7 @@
 {
     "name": "Main",
-    "alias": "main",
-    "description": "",
+    "alias": "مدیریت ماژول ها",
+    "description": "ماژولی برای مدیریت همه ماژول ها",
     "keywords": [],
     "priority": 0,
     "providers": [

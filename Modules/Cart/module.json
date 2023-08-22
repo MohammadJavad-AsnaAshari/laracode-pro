@@ -1,7 +1,7 @@
 {
     "name": "Cart",
-    "alias": "cart",
-    "description": "",
+    "alias": "سبد خرید",
+    "description": "ماژول سبد خرید برای محصولاتی که قصد خرید آنها را دارید",
     "keywords": [],
     "priority": 0,
     "providers": [
