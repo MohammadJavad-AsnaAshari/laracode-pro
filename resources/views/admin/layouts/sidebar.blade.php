@@ -229,6 +229,17 @@
                             </a>
                         </li>
                     </ul>
+                    <ul>
+                        <li class="nav-item has-treeview ">
+                            <a href="{{route("admin.modules.index")}}"
+                               class="nav-link {{isActive("admin.modules.index")}}">
+                                <i class="nav-icon fa fa-dashboard"></i>
+                                <p>
+                                    مدیریت ماژول ها
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
                 @endcanany
             </ul>
         </nav>
