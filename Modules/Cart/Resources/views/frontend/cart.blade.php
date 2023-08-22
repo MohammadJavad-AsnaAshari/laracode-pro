@@ -153,36 +153,40 @@
                     </div>
                     <div class="d-flex">
                         <div class="text-left mt-4">
-                            @if($discount = Cart::getDiscount())
-                                <div class="mt-4">
-                                    <form action="{{route("cart.discount.delete")}}" method="post" id="delete_discount">
-                                        @csrf
-                                        @method("delete")
-                                        <input type="hidden" name="cart", value="cart">
-                                    </form>
-                                    <span>کد تخفیف فعال: <span class="text-success">{{$discount->code}}</span>
-                                        <a href="" onclick="event.preventDefault(); document.getElementById('delete_discount').submit()" class="badge bg-danger">حذف</a>
+                            @if(\Module::isEnabled('Discount'))
+                                @if($discount = Cart::getDiscount())
+                                    <div class="mt-4">
+                                        <form action="{{route("cart.discount.delete")}}" method="post" id="delete_discount">
+                                            @csrf
+                                            @method("delete")
+                                            <input type="hidden" name="cart" , value="cart">
+                                        </form>
+                                        <span>کد تخفیف فعال: <span class="text-success">{{$discount->code}}</span>
+                                        <a href=""
+                                           onclick="event.preventDefault(); document.getElementById('delete_discount').submit()"
+                                           class="badge bg-danger">حذف</a>
                                     </span>
-                                </div>
-                                <div>
-                                    درصد تخفیف: %
-                                    <span class="text-success">
+                                    </div>
+                                    <div>
+                                        درصد تخفیف: %
+                                        <span class="text-success">
                                     {{$discount->percent}} %
                                     </span>
-                                </div>
-                            @else
-                                <form action="{{route('cart.discount.check')}}" method="post" class="mt-4">
-                                    @csrf
-                                    <input type="hidden" name="cart" value="cart">
-                                    <input type="text" class="form-control" name="discount"
-                                           placeholder="کد تخفیف دارید؟">
-                                    <button type="submit" class="btn btn-success mt-2">اعمال تخفیف</button>
-                                    @if($errors->has("discount"))
-                                        <div class="text-danger text-sm mt-2">
-                                            {{$errors->first("discount")}}
-                                        </div>
-                                    @endif
-                                </form>
+                                    </div>
+                                @else
+                                    <form action="{{route('cart.discount.check')}}" method="post" class="mt-4">
+                                        @csrf
+                                        <input type="hidden" name="cart" value="cart">
+                                        <input type="text" class="form-control" name="discount"
+                                               placeholder="کد تخفیف دارید؟">
+                                        <button type="submit" class="btn btn-success mt-2">اعمال تخفیف</button>
+                                        @if($errors->has("discount"))
+                                            <div class="text-danger text-sm mt-2">
+                                                {{$errors->first("discount")}}
+                                            </div>
+                                        @endif
+                                    </form>
+                                @endif
                             @endif
                         </div>
                     </div>
